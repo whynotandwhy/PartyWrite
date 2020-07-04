@@ -2,15 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IItem
+public interface IItem : ICustomerDesires
 {
-    string ItemName { get; }
-    Sprite ItemSprite { get; }
-    string ItemDescription { get; }
-    float RegalValue { get; }
-    float ExcitingValue { get; }
-    float HumorValue { get; }
-    float DifferentValue { get; }
-    float PlayerPrice { get; }
-    float CustomerPrice { get; }
+    string Name { get; }
+    Sprite Sprite { get; }
+    string Description { get; }
+    float PricePlayer { get; }
 }
