@@ -7,7 +7,8 @@ public class DetailedItemDisplay : CoreUIElement<IItem>
 {
     [SerializeField] protected Image _Excitment;
     protected Image Excitment => _Excitment;
-
+    [SerializeField] protected Image _Humor;
+    protected Image Humor => _Humor;
 
     public override void UpdateUI(IItem newData)
     {
