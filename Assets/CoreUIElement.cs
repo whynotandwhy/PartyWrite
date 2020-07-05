@@ -10,8 +10,8 @@ public abstract class CoreUIElement<T> : MonoBehaviour
     protected abstract bool ClearedIfEmpty(T newData);
 
 
-    protected void UpdateText(string text, Text target) { target.text = text; }
-    protected void UpdateSprite(Sprite sprite, Image image) { image.sprite = sprite; }
-    protected void UpdateNumericText(string textformatting, float value, Text target) { UpdateText(string.Format(textformatting, value), target); }
+    protected void UpdateText(Text target, string text) { target.text = text; }
+    protected void UpdateSprite(Image image, Sprite sprite) { image.sprite = sprite; }
+    protected void UpdateNumericText(Text target, string textformatting, float value) { UpdateText(target, string.Format(textformatting, value)); }
     protected void SetPercentage(Image target, float percent) { target.fillAmount = percent; }
 }

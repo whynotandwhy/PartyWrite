@@ -1,5 +1,4 @@
-﻿
-public interface ICustomerDesires
+﻿public interface ICustomerDesires
 {
     float Regal { get; }
     float Exciting { get; }
