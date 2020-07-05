@@ -1,4 +1,6 @@
-﻿public interface IItem : ICustomerDesires
+﻿using UnityEngine;
+
+public interface IItem : ICustomerDesires
 {
     string Name { get; }
     Sprite Sprite { get; }
