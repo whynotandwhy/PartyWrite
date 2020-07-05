@@ -11,6 +11,7 @@ public abstract class CoreUIElement<T> : MonoBehaviour
 
 
     protected void UpdateText(string text, Text target) { target.text = text; }
+    protected void UpdateSprite(Sprite sprite, Image image) { image.sprite = sprite; }
     protected void UpdateNumericText(string textformatting, float value, Text target) { UpdateText(string.Format(textformatting, value), target); }
-    protected void SetPercentage(Image target, float percent) { target.fillAmount = percent; } 
+    protected void SetPercentage(Image target, float percent) { target.fillAmount = percent; }
 }
