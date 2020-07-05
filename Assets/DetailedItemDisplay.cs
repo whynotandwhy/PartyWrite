@@ -33,10 +33,10 @@ public class DetailedItemDisplay : CoreUIElement<IItem>
         SetPercentage(_Humor, newData.Humor);
         SetPercentage(_Different, newData.Different);
         SetPercentage(_Regal, newData.Regal);
-        UpdateText(newData.Name, _Name);
-        UpdateText(newData.Description, _Description);
-        UpdateNumericText("{0}", newData.PricePlayer, _PlayerPrice);
-        UpdateNumericText("{0}", newData.Cost, _CustomerPrice);
+        UpdateText(_Name, newData.Name );
+        UpdateText(_Description, newData.Description );
+        UpdateNumericText(_PlayerPrice, "{0}", newData.PricePlayer);
+        UpdateNumericText(_CustomerPrice, "{0}", newData.Cost );
         UpdateSprite(newData.Sprite, _Sprite);
     }
 
@@ -49,10 +49,10 @@ public class DetailedItemDisplay : CoreUIElement<IItem>
         SetPercentage(_Humor, 0);
         SetPercentage(_Different, 0);
         SetPercentage(_Regal, 0);
-        UpdateText("", _Name);
-        UpdateText("", _Description);
-        UpdateNumericText("{0}", 0, _PlayerPrice);
-        UpdateNumericText("{0}", 0, _CustomerPrice);
+        UpdateText(_Name, "");
+        UpdateText(_Description, "" );
+        UpdateNumericText(_PlayerPrice, "{0}", 0 );
+        UpdateNumericText(_CustomerPrice, "{0}", 0);
         UpdateSprite(null, _Sprite);
 
         return true;
