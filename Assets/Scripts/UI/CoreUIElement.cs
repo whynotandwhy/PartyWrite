@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -6,7 +7,8 @@ using UnityEngine.UI;
 
 public abstract class CoreUIElement<T> : MonoBehaviour
 {
-    public abstract void UpdateUI(T newData);
+    public abstract void UpdateUI(T primaryData);
+        
     protected abstract bool ClearedIfEmpty(T newData);
 
 
@@ -14,4 +16,10 @@ public abstract class CoreUIElement<T> : MonoBehaviour
     protected void UpdateSprite(Image image, Sprite sprite) { image.sprite = sprite; }
     protected void UpdateNumericText(Text target, string textformatting, float value) { UpdateText(target, string.Format(textformatting, value)); }
     protected void SetPercentage(Image target, float percent) { target.fillAmount = percent; }
+}
+
+public abstract class CoreUIElement<T, U> : CoreUIElement<T>
+{
+    public abstract void UpdateUI(T primaryData, U secondaryData);
+
 }

@@ -15,4 +15,18 @@ public class Customer : ICustomerDesires
     public float Different => _Different;
     public float Regal => _Regal;
     public float Cost => _Cost;
+
+    public Customer(
+    float exciting,
+    float humor,
+    float different,
+    float regal,
+    float cost)
+    {
+        _Exciting = exciting;
+        _Humor = humor;
+        _Different = different;
+        _Regal = regal;
+        _Cost = cost;
+    }
 }
