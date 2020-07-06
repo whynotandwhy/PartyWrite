@@ -17,9 +17,3 @@ public abstract class CoreUIElement<T> : MonoBehaviour
     protected void UpdateNumericText(Text target, string textformatting, float value) { UpdateText(target, string.Format(textformatting, value)); }
     protected void SetPercentage(Image target, float percent) { target.fillAmount = percent; }
 }
-
-public abstract class CoreUIElement<T, U> : CoreUIElement<T>
-{
-    public abstract void UpdateUI(T primaryData, U secondaryData);
-
-}
