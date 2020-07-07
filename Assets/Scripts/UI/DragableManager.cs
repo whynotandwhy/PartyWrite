@@ -9,19 +9,24 @@ public class DraggableManager<TDraggable,TItem>
 {
 
     public IEnumerable<TItem> CurrentItems => _mySlots.Values.Select(X=>X.DragItem);
+    #region Summary
     /// <summary>
     /// contains all the slot data for the manager, the key being the index of the slot
     /// so a "next" previous logic can be maintained/observed.
     /// </summary>
+    #endregion
     protected Dictionary<int, TDraggable> _mySlots = new Dictionary<int, TDraggable>();
 
+    #region Summary
     /// <summary>
     /// Adds a new slote to the SlotManager to handle
     /// </summary>
     /// <param name="slot"></param>
+    #endregion
     public virtual void RegisterSlot(TDraggable slot)
     {
-        if (slot == default)
+        /*Changed this from default to null because compiler doesn't know if the type can be default, but it can be null.*/
+        if (slot == null)
             return;
         _mySlots.Add(slot.Index, slot);
     }

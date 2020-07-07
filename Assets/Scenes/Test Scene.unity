@@ -581,7 +581,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 75
+  m_Text: 100
 --- !u!222 &548857290
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -846,8 +846,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91b4d894f07e5c948b5df9572af8e387, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  evaluator: {fileID: 730888554}
+  customerCreator: {fileID: 730888555}
   customerDisplay: {fileID: 730888551}
-  itemDisplay: {fileID: 772617704}
 --- !u!4 &636078431
 Transform:
   m_ObjectHideFlags: 0
@@ -1005,7 +1006,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 2
+  m_Text: 0
 --- !u!222 &725790316
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1026,6 +1027,8 @@ GameObject:
   - component: {fileID: 730888553}
   - component: {fileID: 730888552}
   - component: {fileID: 730888551}
+  - component: {fileID: 730888554}
+  - component: {fileID: 730888555}
   m_Layer: 5
   m_Name: Customer Info Panel
   m_TagString: Untagged
@@ -1116,6 +1119,32 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 730888549}
   m_CullTransparentMesh: 0
+--- !u!114 &730888554
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 730888549}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33564ab77dcb4684a80e715e5e0b1226, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  customerCreator: {fileID: 730888555}
+  itemDisplay: {fileID: 772617704}
+--- !u!114 &730888555
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 730888549}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7df6fb5a158ec9646996caaf861aee3b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &772617702
 GameObject:
   m_ObjectHideFlags: 0
@@ -1189,7 +1218,7 @@ MonoBehaviour:
     _Humor: 9
     _Different: 5
     _Regal: 3
-    _Cost: 25
+    _Cost: 0
     _Name: TempName
     _Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
     _Description: TempDescription
@@ -1774,7 +1803,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 12
+  m_Text: 0
 --- !u!222 &1199914518
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1852,7 +1881,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 10
+  m_Text: 0
 --- !u!222 &1207478920
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2221,7 +2250,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 0
-  m_FillAmount: 0.25
+  m_FillAmount: 0
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
@@ -2780,7 +2809,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 0
-  m_FillAmount: 1
+  m_FillAmount: 0
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
@@ -3007,7 +3036,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 0
-  m_FillAmount: 0.71428573
+  m_FillAmount: 0
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
@@ -3162,7 +3191,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 0
-  m_FillAmount: 1
+  m_FillAmount: 0
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
@@ -3318,7 +3347,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 7
+  m_Text: 0
 --- !u!222 &2013287313
 CanvasRenderer:
   m_ObjectHideFlags: 0

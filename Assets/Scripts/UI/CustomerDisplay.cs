@@ -24,13 +24,34 @@ public class CustomerDisplay : CoreUIElement<ICustomerDesires>
     {
         if (ClearedIfEmpty(customer))
             return;
-        //In else statements, need a way to display the values are over the customer requirements.
-            SetPercentage(Excitment, customer.Exciting); 
-            SetPercentage(Humor, customer.Humor);
-            SetPercentage(Different, customer.Different);
-            SetPercentage(Regal, customer.Regal);
-        
+        SetMeterEffects(Excitment, customer.Exciting);
+        SetPercentage(Excitment, customer.Exciting);
+
+        SetMeterEffects(Humor, customer.Humor);
+        SetPercentage(Humor, customer.Humor);
+
+        SetMeterEffects(Different, customer.Different);
+        SetPercentage(Different, customer.Different);
+
+        SetMeterEffects(Regal, customer.Regal);
+        SetPercentage(Regal, customer.Regal);
+
         UpdateNumericText(CustomerPrice, "{0}", customer.Cost);
+    }
+
+    public void InitCustomer(ICustomerDesires customer)
+    {
+        UpdateNumericText(CustomerPrice, "{0}", customer.Cost);
+        UpdateNumericText(_ValExcitement, "{0}", customer.Exciting);
+        UpdateNumericText(_ValHumor, "{0}", customer.Humor);
+        UpdateNumericText(_ValDifferent, "{0}", customer.Different);
+        UpdateNumericText(_ValRegal, "{0}", customer.Regal);
+    }
+
+    protected void SetMeterEffects(Image meter, float statValue)
+    {
+        //Add more advanced way to recognize how "over" we are.
+        meter.color = statValue <= 1f ? Color.green : statValue > 1f && statValue <= 1.25 ? Color.yellow : Color.red;
     }
 
     protected override bool ClearedIfEmpty(ICustomerDesires newData)

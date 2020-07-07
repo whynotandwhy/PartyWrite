@@ -7,12 +7,16 @@ using UnityEngine.UI;
 public class DetailedItemDisplay : CoreUIElement<IItem>
 {
     [SerializeField] protected Image _Excitment;
+    [SerializeField] protected Text _ValExcitement;
     protected Image Excitment => _Excitment;
     [SerializeField] protected Image _Humor;
+    [SerializeField] protected Text _ValHumor;
     protected Image Humor => _Humor;
     [SerializeField] protected Image _Different;
+    [SerializeField] protected Text _ValDifferent;
     protected Image Different => _Different;
     [SerializeField] protected Image _Regal;
+    [SerializeField] protected Text _ValRegal;
     protected Image Regal => _Regal;
     [SerializeField] protected Text _Name;
     protected Text Name => _Name;
@@ -38,6 +42,10 @@ public class DetailedItemDisplay : CoreUIElement<IItem>
         SetPercentage(Regal, newData.Regal / MaxDesire);
         UpdateText(Name, newData.Name);
         UpdateText(Description, newData.Description);
+        UpdateNumericText(_ValExcitement, "{0}", newData.Exciting);
+        UpdateNumericText(_ValHumor, "{0}", newData.Humor);
+        UpdateNumericText(_ValDifferent, "{0}", newData.Different);
+        UpdateNumericText(_ValRegal, "{0}", newData.Regal);
         UpdateNumericText(PlayerPrice, "{0}", newData.PricePlayer);
         UpdateNumericText(CustomerPrice, "{0}", newData.Cost);
         UpdateSprite(Sprite, newData.Sprite);
@@ -54,6 +62,10 @@ public class DetailedItemDisplay : CoreUIElement<IItem>
         SetPercentage(Regal, 0);
         UpdateText(Name, string.Empty);
         UpdateText(Description, string.Empty);
+        UpdateNumericText(_ValExcitement, "{0}", 0);
+        UpdateNumericText(_ValHumor, "{0}", 0);
+        UpdateNumericText(_ValDifferent, "{0}", 0);
+        UpdateNumericText(_ValRegal, "{0}", 0);
         UpdateNumericText(PlayerPrice, "{0}", 0);
         UpdateNumericText(CustomerPrice, "{0}", 0);
         UpdateSprite(Sprite, null);
