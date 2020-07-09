@@ -10,11 +10,22 @@ using UnityEngine.EventSystems;
 /// </summary>
 public class CoreManger : DraggableManager<Draggable, IItem>
 {
+    [SerializeField] protected DetailedItemDisplay DetailedDisplay; 
+
+
     public override void HandleHover(Draggable dropee, PointerEventData eventData)
     {
-        throw new System.NotImplementedException();
+        if (SharedDrag.gameObject.activeInHierarchy)
+            return;
+
+        DetailedDisplay.UpdateUI((dropee==default)?default:dropee.DragItem);
     }
 
+    /// <summary>
+    /// called when a 
+    /// </summary>
+    /// <param name="eventData"></param>
+    /// <param name="dropped"></param>
     public override void HandleSlotDrop(PointerEventData eventData, Draggable dropped)
     {
         throw new System.NotImplementedException();
