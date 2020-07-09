@@ -1,17 +1,11 @@
 ﻿using UnityEngine;
 
-public class SatisfactionEvaluator : MonoBehaviour
+public class SatisfactionEvaluator
 {
-    //Editor references
-    [SerializeField] protected CustomerCreator customerCreator;
-
-    //This should be the shopping cart
-    [SerializeField] protected TestDetailedItemDisplay itemDisplay;
-
-    protected Customer _evaluatedCustomer;
+    protected ICustomerDesires _evaluatedCustomer;
 
     //Need to figure out how to pass the shopping cart over.Also this doesn't account for item value going over customer goal value
-    public Customer EvaluateCustomer(Customer currentCustomer)
+    public ICustomerDesires EvaluateCustomer(ICustomerDesires currentCustomer, CustomerCreator customerCreator, TestDetailedItemDisplay itemDisplay)
     {
         _evaluatedCustomer = customerCreator.GenerateCustomerComparison(
             CompareValues(currentCustomer.Exciting, itemDisplay.Item.Exciting),
@@ -22,12 +16,6 @@ public class SatisfactionEvaluator : MonoBehaviour
             );
 
         return _evaluatedCustomer;
-    }
-
-    protected void Awake()
-    {
-        if (customerCreator == null)
-            customerCreator = FindObjectOfType<CustomerCreator>();
     }
 
 

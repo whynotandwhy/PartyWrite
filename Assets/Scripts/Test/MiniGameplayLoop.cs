@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class MiniGameplayLoop : MonoBehaviour
 {
@@ -10,34 +7,33 @@ public class MiniGameplayLoop : MonoBehaviour
     [SerializeField] protected SatisfactionEvaluator evaluator;
     [SerializeField] protected CustomerCreator customerCreator;
     [SerializeField] protected CustomerDisplay customerDisplay;
+    [SerializeField] protected TestDetailedItemDisplay itemDisplay;
 
-    protected Customer _customer;
-    protected Customer _customerEvaluation;
+    protected ICustomerDesires customer;
+    protected ICustomerDesires customerEvaluation;
 
     protected void Awake()
     {
-        if (evaluator == null)
-            evaluator = FindObjectOfType<SatisfactionEvaluator>();
-        if (customerCreator == null)
-            customerCreator = FindObjectOfType<CustomerCreator>();
         if (customerDisplay == null)
             customerDisplay = FindObjectOfType<CustomerDisplay>();
+        if (itemDisplay == null)
+            itemDisplay = FindObjectOfType<TestDetailedItemDisplay>();
     }
 
     [ContextMenu("Generate Customer")]
     protected void Start()
     {
-        _customer = customerCreator.GenerateCustomer(100f);
-        customerDisplay.InitCustomer(_customer);
+        customerCreator = new CustomerCreator();
+        customer = customerCreator.GenerateCustomer(100f);
     }
 
     [ContextMenu("Compare Values")]
     protected void EvaluateCustomer()
     {
-        if (_customer == null)
+        if (customer == null)
             throw new NotImplementedException("Customer has not been created.");
 
-        _customerEvaluation = evaluator.EvaluateCustomer(_customer);
-        customerDisplay.UpdateUI(_customerEvaluation);
+        customerEvaluation = evaluator.EvaluateCustomer(customer, customerCreator, itemDisplay);
+        customerDisplay.UpdateUI(customerEvaluation);
     }    
 }

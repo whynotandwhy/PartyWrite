@@ -1,13 +1,13 @@
 ﻿using UnityEngine;
 
-public class CustomerCreator : MonoBehaviour
+public class CustomerCreator 
 { 
-    protected Customer _customer;
+    protected ICustomerDesires _customer;
     protected int _randomStat;
     protected int _maxRandomStat = 16;
 
     
-    public Customer GenerateCustomer(float startingIncome)
+    public ICustomerDesires GenerateCustomer(float startingIncome)
     {
         _customer =
             new Customer(
