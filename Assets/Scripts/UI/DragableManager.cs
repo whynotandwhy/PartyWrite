@@ -1,21 +1,39 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine.EventSystems;
 
 
-public abstract class DraggableManager<TDraggable,TItem> 
+public abstract class DraggableManager<TDraggable,TItem> : MonoBehaviour 
     where TDraggable : IDraggable<TItem>
 {
+    /// <summary>
+    /// shares Drag object to be read and used
+    /// slight optimization, unsure if changing the TDraggable will
+    /// create new DragTracker, to be reviewed in future.
+    /// </summary>
+    protected static DragTracker<TItem> SharedDrag = new DragTracker<TItem>();
+    protected static Transform DragTrackerParent;
 
-    public IEnumerable<TItem> CurrentItems => _mySlots.Values.Select(X=>X.DragItem);
+    [SerializeField] protected Vector2 DragSize;
+    /// <summary>
+    /// This function must be implemented to get the selected sprite
+    /// for the specific TItem
+    /// </summary>
+    /// <param name="item">item passed into dragstart</param>
+    /// <returns>drag sprite</returns>
+    protected abstract Sprite SelectSprite(TItem item);
+
+
+    public IEnumerable<TItem> CurrentItems => mySlots.Values.Select(X=>X.DragItem);
     #region Summary
     /// <summary>
     /// contains all the slot data for the manager, the key being the index of the slot
     /// so a "next" previous logic can be maintained/observed.
     /// </summary>
     #endregion
-    protected Dictionary<int, TDraggable> _mySlots = new Dictionary<int, TDraggable>();
+    protected Dictionary<int, TDraggable> mySlots = new Dictionary<int, TDraggable>();
 
     #region Summary
     /// <summary>
@@ -28,51 +46,76 @@ public abstract class DraggableManager<TDraggable,TItem>
         /*Changed this from default to null because compiler doesn't know if the type can be default, but it can be null.*/
         if (slot == null)
             return;
-        _mySlots.Add(slot.Index, slot);
+        mySlots.Add(slot.Index, slot);
     }
 
-    public virtual void HandleSlotDrop(PointerEventData eventData, TDraggable dropped)
-    {
-        //TODO: what happens when an item is dropped on this inventory
+    public abstract void HandleSlotDrop(PointerEventData eventData, TDraggable dropped);
 
-        OnDrop();
-    }
-
+    /// <summary>
+    /// how to handle when an object is droped on an invalid slot
+    /// </summary>
     public virtual void OnDrop()
     {
-        //TODO hide the draggging Visualations
+        SharedDrag.gameObject.SetActive(false);
+        SharedDrag.eventData = default;
     }
 
-    public void HandleHover(TDraggable dropee, PointerEventData eventData)
+    public abstract void HandleHover(TDraggable dropee, PointerEventData eventData);
+
+    protected virtual void Awake()
     {
-        //what happens when you mouse over an object in our inventory
-        //dropee will be null if your not over something
+        if (SharedDrag != default)
+            return;
+
+        InitDragObject();
+    }
+    public void InitDragObject()
+    {
+        var mouseObject = new GameObject();
+        SharedDrag = mouseObject.AddComponent<DragTracker<TItem>>();
+        SharedDrag.Rect = mouseObject.AddComponent<RectTransform>();
+        if (DragSize == default)
+            DragSize = new Vector2(32, 32);
+        SharedDrag.Rect.sizeDelta = DragSize;
+        SharedDrag.DragImage = mouseObject.AddComponent<Image>();
+        SharedDrag.DragImage.raycastTarget = false;
     }
 
+    protected virtual void Start()
+    {
+        InitDragParentage();
+    }
 
-    protected abstract Sprite SelectSprite(TItem item);
+    protected virtual void InitDragParentage()
+    {
+        if (DragTrackerParent != default)
+        {
+            Debug.Log(string.Format("{0} did not set parentage", gameObject.name));
+            return;
+        }
+        DragTrackerParent = transform.parent;
+    }
 
     protected void HandleDragStart(PointerEventData eventData)
     {
         //what do we do when we start dragging,
-
-        CommonMountPointer.transform.SetParent(transform.parent.parent);
-        CommonMountPointer.transform.SetAsLastSibling();
-        CommonMountPointer.gameObject.SetActive(true);
-        CommonMountPointer.eventData = eventData;
-        CommonMountPointer.DragImage.sprite = eventData.pointerDrag.GetComponentInChildren<VisableSlot>().Tracker.Item.DisplayImage;
+        SharedDrag.transform.SetParent(DragTrackerParent);
+        SharedDrag.transform.SetAsLastSibling();
+        SharedDrag.gameObject.SetActive(true);
+        SharedDrag.eventData = eventData;
+        SharedDrag.DragImage.sprite = eventData.pointerDrag.GetComponentInChildren<VisableSlot>().Tracker.Item.DisplayImage;
     }
 
     public void HandleDrag(PointerEventData eventData)
     {
         //Make a new drag item if needed.
-        if (CommonMountPointer.eventData == default || CommonMountPointer.eventData.pointerDrag != eventData.pointerDrag)
+        if (SharedDrag.eventData == default || SharedDrag.eventData.pointerDrag != eventData.pointerDrag)
         {
             HandleDragStart(eventData);
         }
 
         //Make thing follow pointer
-        CommonMountPointer.Rect.position = Input.mousePosition;
+        SharedDrag.Rect.position = Input.mousePosition;
     }
 
 
