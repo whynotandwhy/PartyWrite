@@ -7,17 +7,21 @@ using UnityEngine.UI;
 public class MiniGameplayLoop : MonoBehaviour
 {
     //This would need to be exchanged for a shopping cart containing total values
-    [SerializeField] protected SatisfactionEvaluator evaluator;
+    [SerializeField] protected SatisfactionEvaluator _evaluator;
     [SerializeField] protected CustomerCreator customerCreator;
     [SerializeField] protected CustomerDisplay customerDisplay;
+    [SerializeField] protected TestDetailedItemDisplay itemDisplay;
 
-    protected Customer _customer;
-    protected Customer _customerEvaluation;
+    public float something { get; protected set; }
+
+    protected ICustomerDesires _customer;
+    protected ICustomerDesires _customerEvaluation;
 
     protected void Awake()
     {
-        if (evaluator == null)
-            evaluator = FindObjectOfType<SatisfactionEvaluator>();
+
+        if (_evaluator == null)
+            _evaluator = FindObjectOfType<SatisfactionEvaluator>();
         if (customerCreator == null)
             customerCreator = FindObjectOfType<CustomerCreator>();
         if (customerDisplay == null)
@@ -37,7 +41,7 @@ public class MiniGameplayLoop : MonoBehaviour
         if (_customer == null)
             throw new NotImplementedException("Customer has not been created.");
 
-        _customerEvaluation = evaluator.EvaluateCustomer(_customer);
+        _customerEvaluation = _evaluator.CalculateSatifaction(_customer, itemDisplay.Item);
         customerDisplay.UpdateUI(_customerEvaluation);
     }    
 }

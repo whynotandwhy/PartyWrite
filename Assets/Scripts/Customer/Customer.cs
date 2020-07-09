@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class Customer : ICustomerDesires
 {
     [SerializeField] protected float _Exciting;

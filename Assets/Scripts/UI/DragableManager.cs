@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine.EventSystems;
 
 
-public class DraggableManager<TDraggable,TItem> 
+public abstract class DraggableManager<TDraggable,TItem> 
     where TDraggable : IDraggable<TItem>
 {
 
@@ -50,27 +50,29 @@ public class DraggableManager<TDraggable,TItem>
     }
 
 
+    protected abstract Sprite SelectSprite(TItem item);
+
     protected void HandleDragStart(PointerEventData eventData)
     {
         //what do we do when we start dragging,
 
-        //CommonMountPointer.transform.SetParent(transform.parent.parent);
-        //CommonMountPointer.transform.SetAsLastSibling();
-        //CommonMountPointer.gameObject.SetActive(true);
-        //CommonMountPointer.eventData = eventData;
-        //CommonMountPointer.DragImage.sprite = eventData.pointerDrag.GetComponentInChildren<VisableSlot>().Tracker.Item.DisplayImage;
+        CommonMountPointer.transform.SetParent(transform.parent.parent);
+        CommonMountPointer.transform.SetAsLastSibling();
+        CommonMountPointer.gameObject.SetActive(true);
+        CommonMountPointer.eventData = eventData;
+        CommonMountPointer.DragImage.sprite = eventData.pointerDrag.GetComponentInChildren<VisableSlot>().Tracker.Item.DisplayImage;
     }
 
     public void HandleDrag(PointerEventData eventData)
     {
         //Make a new drag item if needed.
-        //if (CommonMountPointer.eventData == default || CommonMountPointer.eventData.pointerDrag != eventData.pointerDrag)
-        //{
-        //    HandleDragStart(eventData);
-        //}
+        if (CommonMountPointer.eventData == default || CommonMountPointer.eventData.pointerDrag != eventData.pointerDrag)
+        {
+            HandleDragStart(eventData);
+        }
 
         //Make thing follow pointer
-        //CommonMountPointer.Rect.position = Input.mousePosition;
+        CommonMountPointer.Rect.position = Input.mousePosition;
     }
 
 

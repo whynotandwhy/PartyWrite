@@ -6,8 +6,7 @@ public class CustomerCreator : MonoBehaviour
     protected int _randomStat;
     protected int _maxRandomStat = 16;
 
-    
-    public Customer GenerateCustomer(float startingIncome)
+    public ICustomerDesires GenerateCustomer(float startingIncome)
     {
         _customer =
             new Customer(
@@ -19,7 +18,8 @@ public class CustomerCreator : MonoBehaviour
 
         return _customer;
     }
-    public Customer GenerateCustomerComparison(float exciting, float humor, float different, float regal, float cost)
+
+    public ICustomerDesires GenerateCustomerComparison(float exciting, float humor, float different, float regal, float cost)
     {
         return new Customer(exciting, humor, different, regal, cost);
     }
