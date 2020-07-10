@@ -35,5 +35,7 @@ public class MenuSwitcher : MonoBehaviour
 
         titleMenu.SetActive(!gameStarted);
         gamePanel.SetActive(gameStarted);
+
+        AudioManager.instance.PlayShopSong();
     }
 }
