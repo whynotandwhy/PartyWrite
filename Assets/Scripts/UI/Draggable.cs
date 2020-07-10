@@ -2,18 +2,24 @@
 using UnityEngine.EventSystems;
 
 
-public class Draggable : MonoBehaviour, IDraggable<IItem>
+public class Draggable : MonoBehaviour, ISlot<IItem>
 {
-    protected Item _Item;
-    public IItem DragItem => _Item;
+    [SerializeField] protected Item item;
+    public IItem DragItem => item;
 
-    protected Sprite _DragIcon;
-    public Sprite DragIcon => _DragIcon;
+    protected Sprite dragIcon;
+    public Sprite DragIcon => dragIcon;
 
-    protected int _Index;
-    public int Index => _Index;
+    [SerializeField] protected int index;
+    public int Index => index;
 
-    protected DraggableManager<IDraggable<IItem>,IItem> _Manager;
+    [SerializeField] protected int count;
+    public int Count => count;
+
+    [SerializeField] protected int maxCount;
+    public int MaxCount => maxCount;
+
+    protected DraggableManager<IDraggable<IItem>, IItem> _Manager;
 
     public void Start()
     {
@@ -25,12 +31,12 @@ public class Draggable : MonoBehaviour, IDraggable<IItem>
 
     public void OnDrag(PointerEventData eventData)
     {
-        _Manager.HandleDrag(eventData);
+        _Manager.HandleDrag(eventData, this);
     }
 
     public void OnDrop(PointerEventData eventData)
     {
-        _Manager.HandleSlotDrop(eventData,this);
+        _Manager.HandleSlotDrop(eventData, this);
     }
 
     public void OnEndDrag(PointerEventData eventData)
@@ -46,6 +52,63 @@ public class Draggable : MonoBehaviour, IDraggable<IItem>
     public void OnPointerExit(PointerEventData eventData)
     {
         _Manager.HandleHover(default, eventData);
+    }
+
+    public void Add(IItem item, int count)
+    {
+        if (this.item == default)
+        {
+            Set(item, count);
+            return;
+        }
+        if (this.item != item)
+            throw new System.InvalidOperationException("adding mismatch");
+        this.count += count - AddRemainder(count);
+    }
+
+    public void Subtract(IItem item, int count)
+    {
+        if ((this.item == default)||(this.item != item))
+            throw new System.InvalidOperationException("adding mismatch");
+        this.count -=  count - SubtractRemainder(count);
+    }
+
+    protected int AddRemainder(int count)
+    {
+        return Mathf.Min(count, this.MaxCount - count);
+    }
+
+    public int CanAdd(IItem item, int count)
+    {
+        if (item == default)
+            return count;
+
+        if ((this.item == default) || (this.item == item))
+            return AddRemainder(count);
+
+        return count;
+    }
+
+    protected int SubtractRemainder(int count)
+    {
+        return Mathf.Max(0,  count - this.count);
+    }
+
+    public int CanSubtract(IItem item, int count)
+    {
+        if (item == default)
+            return count;
+
+        if ((this.item == default) || (this.item == item))
+            return SubtractRemainder(count) ;
+
+        return count;
+    }
+
+    public void Set(IItem item, int count)
+    {
+        this.item = item as Item;
+        this.count = count;
     }
 }
 
