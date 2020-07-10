@@ -1,7 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class CustomerDisplay : CoreUIElement<ICustomerDesires>
 {
@@ -13,8 +12,8 @@ public class CustomerDisplay : CoreUIElement<ICustomerDesires>
     protected Image Different => _Different;
     [SerializeField] protected Image _Regal;
     protected Image Regal => _Regal;
-    [SerializeField] protected Text _CustomerPrice;
-    protected Text CustomerPrice => _CustomerPrice;
+    [SerializeField] protected TMP_Text _CustomerPrice;
+    protected TMP_Text CustomerPrice => _CustomerPrice;
 
     public override void UpdateUI(ICustomerDesires customer)
     {

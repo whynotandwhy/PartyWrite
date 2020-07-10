@@ -2,14 +2,14 @@
 
 public class CustomerCreator 
 { 
-    protected ICustomerDesires _customer;
-    protected int _randomStat;
-    protected int _maxRandomStat = 16;
+    protected static ICustomerDesires customer;
+    protected static int randomStat;
+    protected static int maxRandomStat = 16;
 
     
-    public ICustomerDesires GenerateCustomer(float startingIncome)
+    public static ICustomerDesires GenerateCustomer(float startingIncome)
     {
-        _customer =
+        customer =
             new Customer(
                         RandomizeCustomerStat(),
                         RandomizeCustomerStat(),
@@ -17,13 +17,13 @@ public class CustomerCreator
                         RandomizeCustomerStat(),
                         startingIncome);
 
-        return _customer;
+        return customer;
     }
 
-    public ICustomerDesires GenerateCustomerComparison(float exciting, float humor, float different, float regal, float cost)
+    public static ICustomerDesires GenerateCustomerComparison(float exciting, float humor, float different, float regal, float cost)
     {
         return new Customer(exciting, humor, different, regal, cost);
     }
 
-    protected int RandomizeCustomerStat() => _randomStat = Random.Range(1, _maxRandomStat);
+    protected static int RandomizeCustomerStat() => randomStat = Random.Range(1, maxRandomStat);
 }

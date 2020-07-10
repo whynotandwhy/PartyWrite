@@ -7,26 +7,21 @@ public interface GameScoring
 }
 
 
-public class SatisfactionEvaluator : MonoBehaviour
+public class SatisfactionEvaluator
 {
-    protected ICustomerDesires _evaluatedCustomer;
-
-    //This should be the shopping cart
-    [SerializeField] protected TestDetailedItemDisplay itemDisplay;
-
-    protected Customer _evaluatedCustomer;
+    protected Customer evaluatedCustomer;
 
 
-    public ICustomerDesires CalculateSatifaction
+    public static ICustomerDesires CalculateSatifaction
         (ICustomerDesires goals, IItem guess)
     {
         ICustomerDesires myguess = guess as ICustomerDesires;
-        return customerCreator.GenerateCustomerComparison(
+        return CustomerCreator.GenerateCustomerComparison(
                 CompareValues(goals.Exciting, guess.Exciting),
                 CompareValues(goals.Humor, guess.Humor),
                 CompareValues(goals.Different, guess.Different),
                 CompareValues(goals.Regal, guess.Regal),
-                goals.Cost - itemDisplay.Item.Cost
+                goals.Cost - guess.Cost
             );
     }
 
@@ -40,28 +35,9 @@ public class SatisfactionEvaluator : MonoBehaviour
         return new Item(0, 0, 0, 0, cost, string.Empty, default, string.Empty, 0);
     }
 
-    protected float CompareValues(float customerValue, float cartValue)
+    protected static float CompareValues(float customerValue, float cartValue)
     {
         return cartValue / customerValue;
     }
-
-    //Need to figure out how to pass the shopping cart over.Also this doesn't account for item value going over customer goal value
-    public ICustomerDesires EvaluateCustomer(ICustomerDesires currentCustomer)
-    {
-        ICustomerDesires _evaluatedCustomer = 
-            CalculateSatifaction(currentCustomer, itemDisplay.Item);
-        return _evaluatedCustomer;
-    }
-
-
-
-
-    protected void Awake()
-    {
-        if (customerCreator == null)
-            customerCreator = FindObjectOfType<CustomerCreator>();
-    }
-
-
 
 }

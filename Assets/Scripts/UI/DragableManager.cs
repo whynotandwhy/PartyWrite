@@ -103,7 +103,7 @@ public abstract class DraggableManager<TDraggable,TItem> : MonoBehaviour
         SharedDrag.transform.SetAsLastSibling();
         SharedDrag.gameObject.SetActive(true);
         SharedDrag.eventData = eventData;
-        SharedDrag.DragImage.sprite = eventData.pointerDrag.GetComponentInChildren<VisableSlot>().Tracker.Item.DisplayImage;
+        //SharedDrag.DragImage.sprite = eventData.pointerDrag.GetComponentInChildren<VisableSlot>().Tracker.Item.DisplayImage;
     }
 
     public void HandleDrag(PointerEventData eventData)

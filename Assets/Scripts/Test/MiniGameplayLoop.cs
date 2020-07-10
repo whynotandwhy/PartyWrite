@@ -4,8 +4,6 @@ using UnityEngine;
 public class MiniGameplayLoop : MonoBehaviour
 {
     //This would need to be exchanged for a shopping cart containing total values
-    [SerializeField] protected SatisfactionEvaluator _evaluator;
-    [SerializeField] protected CustomerCreator customerCreator;
     [SerializeField] protected CustomerDisplay customerDisplay;
     [SerializeField] protected TestDetailedItemDisplay itemDisplay;
 
@@ -24,19 +22,18 @@ public class MiniGameplayLoop : MonoBehaviour
     }
 
     [ContextMenu("Generate Customer")]
-    protected void Start()
+    protected void GenerateCustomer()
     {
-        customerCreator = new CustomerCreator();
-        customer = customerCreator.GenerateCustomer(100f);
+        customer = CustomerCreator.GenerateCustomer(100f);
+        EvaluateCustomer();
     }
 
-    [ContextMenu("Compare Values")]
     protected void EvaluateCustomer()
     {
         if (customer == null)
             throw new NotImplementedException("Customer has not been created.");
 
-        customerEvaluation = evaluator.EvaluateCustomer(customer, customerCreator, itemDisplay);
+        customerEvaluation = SatisfactionEvaluator.CalculateSatifaction(customer, itemDisplay.Item);
         customerDisplay.UpdateUI(customerEvaluation);
     }    
 }
