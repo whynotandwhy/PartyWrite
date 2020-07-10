@@ -1,12 +1,30 @@
-﻿public class DialogueDisplay : CoreUIElement<string>
+﻿using System;
+using UnityEngine;
+using TMPro;
+
+public class DialogueDisplay : CoreUIElement<string>
 {
+    [SerializeField] TMP_Text dialogueBox;
+    [SerializeField] GameObject dialogueBoxObject;
+
     public override void UpdateUI(string primaryData)
     {
-        throw new System.NotImplementedException();
+        if(ClearedIfEmpty(primaryData));
+        {
+            dialogueBoxObject.SetActive(true);
+            UpdateText(dialogueBox, primaryData);
+        }        
     }
 
     protected override bool ClearedIfEmpty(string newData)
     {
-        throw new System.NotImplementedException();
+        if(newData == string.Empty)
+        {
+            UpdateText(dialogueBox, string.Empty);
+            dialogueBoxObject.SetActive(false);
+            return false;
+        }
+
+        return true;
     }
 }

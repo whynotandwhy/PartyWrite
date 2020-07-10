@@ -20,6 +20,13 @@ public class DialogueTextUpdater : MonoBehaviour
     //UI Elements
     [SerializeField] protected DialogueDisplay dialogueBox;
 
+    //Cached references
+    [SerializeField] protected GameManager gameManager;
+
+    //State variables
+    protected CustomerDialogueScriptableObject currentDialogue;
+    protected int currentDialogueIndex = 0;
+    protected bool dialogueQueued = false;
 
 
     public void DisplayCustomerDialogue(ICustomerDesires customer)
@@ -28,7 +35,28 @@ public class DialogueTextUpdater : MonoBehaviour
         var worstCategory = SatisfactionEvaluator.CustomerCategoryPriority(customer);
         var worstCategoryValue = SatisfactionEvaluator.GetCategoryValue(worstCategory);
 
-        GetCustomerDialogue(worstCategory, worstCategoryValue);
+        currentDialogue = GetCustomerDialogue(worstCategory, worstCategoryValue);
+        currentDialogueIndex = 0;
+        dialogueQueued = true;
+    }
+
+    protected void Awake()
+    {
+        if (gameManager == null)
+            gameManager = FindObjectOfType<GameManager>();
+    }
+
+    protected void Update()
+    {
+        if(dialogueQueued)
+        {
+            DisplayDialogue(currentDialogue);
+        }
+    }
+
+    private void DisplayDialogue(CustomerDialogueScriptableObject dialogue)
+    {
+        dialogueBox.UpdateUI(dialogue.dialogue);
     }
 
     protected CustomerDialogueScriptableObject GetCustomerDialogue(int worstCategory, float categoryValue)
@@ -61,70 +89,5 @@ public class DialogueTextUpdater : MonoBehaviour
         return perfectValueChoice;
     }
 
-    protected void Awake()
-    {
-        //evaluator = FindObjectOfType<SatisfactionEvaluator>();
-        //gameManager = FindObjectOfType<GameManager>();
-    }
-
-    protected IEnumerator DisplayCustomerDialogue(CustomerDialogueScriptableObject textToDisplay)
-    {
-        print("Opening dialogue box.");
-        //gameManager.PausedGame = true;
-        OpenDialogueBox(customerDialogueBox, customerDialogueText);
-
-        customerDialogueText.text = textToDisplay.dialogue;
-
-        yield return StartCoroutine(WaitForKeyPress());
-
-        print("Closing dialogue box.");
-
-        CloseDialogueBox(customerDialogueBox, customerDialogueText);
-        //gameManager.PausedGame = false;
-    }
-
-    protected IEnumerator WaitForKeyPress()
-    {
-        bool notPressed = true;
-
-        while (notPressed)
-        {
-            if (Input.anyKeyDown)
-            {
-                notPressed = false;
-            }
-            yield return null;
-        }
-    }
-
-    public IEnumerator DisplayPlayerDialogue(PlayerDialogueScriptableObject textToDisplay)
-    {
-
-        OpenDialogueBox(playerDialogueBox, playerDialogueText);
-        int t = textToDisplay.dialogue.Length;
-
-        for (int i = 0; i < t; i++)
-        {
-            playerDialogueText.text = textToDisplay.dialogue[i];
-
-            yield return StartCoroutine(WaitForKeyPress());
-        }
-
-        CloseDialogueBox(playerDialogueBox, playerDialogueText);
-    }
-
-    protected void OpenDialogueBox(Image dialogueBox, Text dialogueText)
-    {
-        dialogueText.text = "";
-        dialogueBox.gameObject.SetActive(true);
-        dialogueText.gameObject.SetActive(true);
-    }
-
-    protected void CloseDialogueBox(Image dialogueBox, Text dialogueText)
-    {
-        dialogueText.text = "";
-        dialogueBox.gameObject.SetActive(false);
-        dialogueText.gameObject.SetActive(false);
-    }
 
 }
