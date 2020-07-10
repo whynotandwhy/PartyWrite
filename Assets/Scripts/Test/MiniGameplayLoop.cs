@@ -4,13 +4,16 @@ using UnityEngine;
 public class MiniGameplayLoop : MonoBehaviour
 {
     //This would need to be exchanged for a shopping cart containing total values
-    [SerializeField] protected SatisfactionEvaluator evaluator;
+    [SerializeField] protected SatisfactionEvaluator _evaluator;
     [SerializeField] protected CustomerCreator customerCreator;
     [SerializeField] protected CustomerDisplay customerDisplay;
     [SerializeField] protected TestDetailedItemDisplay itemDisplay;
 
     protected ICustomerDesires customer;
     protected ICustomerDesires customerEvaluation;
+
+    protected ICustomerDesires _customer;
+    protected ICustomerDesires _customerEvaluation;
 
     protected void Awake()
     {

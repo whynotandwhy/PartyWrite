@@ -19,7 +19,8 @@ public class CustomerCreator
 
         return _customer;
     }
-    public Customer GenerateCustomerComparison(float exciting, float humor, float different, float regal, float cost)
+
+    public ICustomerDesires GenerateCustomerComparison(float exciting, float humor, float different, float regal, float cost)
     {
         return new Customer(exciting, humor, different, regal, cost);
     }
