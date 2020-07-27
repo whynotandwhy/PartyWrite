@@ -31,7 +31,12 @@ public class CoreManger : DraggableManager<Draggable, IItem>
         throw new System.NotImplementedException();
     }
 
-    protected override Sprite SelectSprite(IItem item)
+    protected virtual void Swap(Draggable source, Draggable Destination)
+    {
+
+    }
+
+    protected override Sprite SelectSprite(Draggable item)
     {
         throw new System.NotImplementedException();
     }

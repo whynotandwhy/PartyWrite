@@ -23,7 +23,7 @@ public abstract class DraggableManager<TDraggable,TItem> : MonoBehaviour
     /// </summary>
     /// <param name="item">item passed into dragstart</param>
     /// <returns>drag sprite</returns>
-    protected abstract Sprite SelectSprite(TItem item);
+    protected abstract Sprite SelectSprite(TDraggable item);
 
 
     public IEnumerable<TItem> CurrentItems => mySlots.Values.Select(X=>X.DragItem);
@@ -94,24 +94,24 @@ public abstract class DraggableManager<TDraggable,TItem> : MonoBehaviour
             return;
         }
         DragTrackerParent = transform.parent;
-    }
-
-    protected void HandleDragStart(PointerEventData eventData)
-    {
-        //what do we do when we start dragging,
         SharedDrag.transform.SetParent(DragTrackerParent);
         SharedDrag.transform.SetAsLastSibling();
-        SharedDrag.gameObject.SetActive(true);
-        SharedDrag.eventData = eventData;
-        //SharedDrag.DragImage.sprite = eventData.pointerDrag.GetComponentInChildren<VisableSlot>().Tracker.Item.DisplayImage;
     }
 
-    public void HandleDrag(PointerEventData eventData)
+    protected void HandleDragStart(PointerEventData eventData, TDraggable slot)
+    {
+        //what do we do when we start dragging,
+        SharedDrag.gameObject.SetActive(true);
+        SharedDrag.eventData = eventData;
+        SharedDrag.DragImage.sprite = SelectSprite(slot);
+    }
+
+    public void HandleDrag(PointerEventData eventData, TDraggable slot)
     {
         //Make a new drag item if needed.
         if (SharedDrag.eventData == default || SharedDrag.eventData.pointerDrag != eventData.pointerDrag)
         {
-            HandleDragStart(eventData);
+            HandleDragStart(eventData, slot);
         }
 
         //Make thing follow pointer
