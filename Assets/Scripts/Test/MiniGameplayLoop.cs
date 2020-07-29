@@ -47,7 +47,8 @@ public class MiniGameplayLoop : MonoBehaviour
 
     protected void CountDownTime()
     {
-        currentCustomerTime = Mathf.Clamp01(currentCustomerTime - Time.deltaTime);
+        //Need to display this somewhere
+        currentCustomerTime = Mathf.Clamp(currentCustomerTime - Time.deltaTime, 0, customerTimerMax);
 
         if (currentCustomerTime <= 0f)
             GetCustomerFinalScore();
@@ -68,7 +69,7 @@ public class MiniGameplayLoop : MonoBehaviour
         Debug.Log("Final score: " + score);
 
         //If this is our final customer, get show the "end panel" and return
-        if (currentCustomerIndex == totalCustomerCount)
+        if (currentCustomerIndex == totalCustomerCount - 1)
         {
             DisplayFinalScores();
             return;
@@ -105,6 +106,10 @@ public class MiniGameplayLoop : MonoBehaviour
     
     protected void DisplayFinalScores()
     {
+        foreach(float score in customerScores)
+        {
+            Debug.Log("Score for customer: " + score);
+        }
         //Maybe some kind of outro dialogue here
 
         //Either average our scores together in customerScores or display all of them individually on a panel

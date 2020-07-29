@@ -404,9 +404,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   customerDisplay: {fileID: 18240179}
-  itemDisplay: {fileID: 1215868455}
-  totalCustomerCount: 0
-  customerTimerMax: 0
+  itemDisplay: {fileID: 180855036}
+  totalCustomerCount: 5
+  customerTimerMax: 60
 --- !u!4 &180855035
 Transform:
   m_ObjectHideFlags: 0
