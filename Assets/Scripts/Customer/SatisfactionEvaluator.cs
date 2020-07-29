@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-public interface GameScoring
+public interface IGameScoring
 {
     Customer CalculateSatifaction(ICustomerDesires goals, ICustomerDesires guess);
 }
@@ -26,6 +26,24 @@ public class SatisfactionEvaluator
                 CompareValues(goals.Regal, guess.Regal),
                 goals.Cost - guess.Cost
             );
+    }
+
+    public static float CalculateFinalScore(ICustomerDesires goals, IItem guess)
+    {
+        float excitingRating = GetValueDifferential(goals.Exciting, guess.Exciting);
+        float humorRating = GetValueDifferential(goals.Humor, guess.Humor);
+        float differentRating = GetValueDifferential(goals.Different, guess.Different);
+        float regalRating = GetValueDifferential(goals.Regal, guess.Regal);
+
+        float costRating;
+        if (guess.Cost < goals.Cost)
+            costRating = 1.1f;
+        else
+        {
+            costRating = GetValueDifferential(goals.Cost, guess.Cost);
+        }        
+
+        return (excitingRating + humorRating + differentRating + regalRating + costRating) / 5;
     }
 
     public static int CustomerCategoryPriority(ICustomerDesires customer)
@@ -91,8 +109,16 @@ public class SatisfactionEvaluator
         return new Item(excitement, humor, different, regal, cost, string.Empty, default, string.Empty, 0);
     }
 
+
     protected static float CompareValues(float customerValue, float cartValue)
     {
+        return cartValue / customerValue;
+    }
+
+    protected static float GetValueDifferential(float customerValue, float cartValue)
+    {        
+        if(customerValue < cartValue)
+            return customerValue / cartValue;
         return cartValue / customerValue;
     }
 

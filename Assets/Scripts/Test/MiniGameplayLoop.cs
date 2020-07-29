@@ -4,14 +4,23 @@ using UnityEngine;
 public class MiniGameplayLoop : MonoBehaviour
 {
     //This would need to be exchanged for a shopping cart containing total values
+    [Header("Reference Scripts")]
     [SerializeField] protected CustomerDisplay customerDisplay;
     [SerializeField] protected TestDetailedItemDisplay itemDisplay;
+
+    [Header("Game Settings")][SerializeField] protected int totalCustomerCount = 2;
+    [SerializeField] protected float customerTimerMax;
 
     protected ICustomerDesires customer;
     protected ICustomerDesires customerEvaluation;
 
     protected ICustomerDesires _customer;
     protected ICustomerDesires _customerEvaluation;
+
+    protected float[] customerScores;
+    protected int currentCustomerIndex = 0;
+    protected float currentCustomerTime;
+    protected bool countDownPaused = true;
 
     protected void Awake()
     {
@@ -21,19 +30,84 @@ public class MiniGameplayLoop : MonoBehaviour
             itemDisplay = FindObjectOfType<TestDetailedItemDisplay>();
     }
 
-    [ContextMenu("Generate Customer")]
-    protected void GenerateCustomer()
+    protected void Start()
     {
-        customer = CustomerCreator.GenerateCustomer(100f);
-        EvaluateCustomer();
+        customerScores = new float[totalCustomerCount];
+        
+        // Intro dialogue
+
+        GenerateCustomer();
     }
 
+    protected void Update()
+    {
+        if(!countDownPaused)
+            CountDownTime();
+    }
+
+    protected void CountDownTime()
+    {
+        currentCustomerTime = Mathf.Clamp01(currentCustomerTime - Time.deltaTime);
+
+        if (currentCustomerTime <= 0f)
+            GetCustomerFinalScore();
+    }
+
+    [ContextMenu("Get Final Score")]
+    protected void GetCustomerFinalScore()
+    {
+        //farewell dialogue goes here.
+        //Pauses the timer since the current customer is complete.
+        countDownPaused = true;
+        float score = SatisfactionEvaluator.CalculateFinalScore(customer, itemDisplay.Item);
+
+        //Adds this score to the array
+        customerScores[currentCustomerIndex] = score;
+        
+
+        Debug.Log("Final score: " + score);
+
+        //If this is our final customer, get show the "end panel" and return
+        if (currentCustomerIndex == totalCustomerCount)
+        {
+            DisplayFinalScores();
+            return;
+        }
+
+        //otherwise incremement and start a new customer.
+        currentCustomerIndex++;
+        GenerateCustomer();
+    }
+
+    [ContextMenu("Generate New Customer")]
+    protected void GenerateCustomer()
+    {
+        //Greetings dialogue goes here.
+        
+        customer = CustomerCreator.GenerateCustomer(100f);
+        
+        //Resetting the current customer timer and starting countdown.
+        currentCustomerTime = customerTimerMax;
+        countDownPaused = false;
+    }
+
+    [ContextMenu("Evaluate Current Customer")]
     protected void EvaluateCustomer()
     {
+        //Customer dialogue goes in here for the "ask the customer button" which will update customer display meters.
+
         if (customer == null)
             throw new NotImplementedException("Customer has not been created.");
 
         customerEvaluation = SatisfactionEvaluator.CalculateSatifaction(customer, itemDisplay.Item);
         customerDisplay.UpdateUI(customerEvaluation);
-    }    
+    }
+    
+    protected void DisplayFinalScores()
+    {
+        //Maybe some kind of outro dialogue here
+
+        //Either average our scores together in customerScores or display all of them individually on a panel
+        //Could use CoreUIUpdater to create a "win" panel for this, too.
+    }
 }
