@@ -8,8 +8,7 @@ public class Accuracy1 : CoreUIElement<float>
     [SerializeField][Range(-1,1)] protected float Value;
 
     [ContextMenu("Doit")]
-    protected void Testing()
-    { UpdateUI(Value); }
+    protected void Testing() { UpdateUI(Value); }
 
     [SerializeField] protected Image Displayer;
     [SerializeField] protected Color Above;
