@@ -13,7 +13,7 @@ public abstract class DraggableManager<TDraggable,TItem> : MonoBehaviour
     /// slight optimization, unsure if changing the TDraggable will
     /// create new DragTracker, to be reviewed in future.
     /// </summary>
-    protected static DragTracker<TItem> SharedDrag = new DragTracker<TItem>();
+    protected static DragTracker<TDraggable> SharedDrag = new DragTracker<TDraggable>();
     protected static Transform DragTrackerParent;
 
     [SerializeField] protected Vector2 DragSize;
@@ -62,29 +62,10 @@ public abstract class DraggableManager<TDraggable,TItem> : MonoBehaviour
 
     public abstract void HandleHover(TDraggable dropee, PointerEventData eventData);
 
-    protected virtual void Awake()
-    {
-        if (SharedDrag != default)
-            return;
+    protected virtual void Awake(){InitDragObject();}
+    protected abstract void InitDragObject();
 
-        InitDragObject();
-    }
-    public void InitDragObject()
-    {
-        var mouseObject = new GameObject();
-        SharedDrag = mouseObject.AddComponent<DragTracker<TItem>>();
-        SharedDrag.Rect = mouseObject.AddComponent<RectTransform>();
-        if (DragSize == default)
-            DragSize = new Vector2(32, 32);
-        SharedDrag.Rect.sizeDelta = DragSize;
-        SharedDrag.DragImage = mouseObject.AddComponent<Image>();
-        SharedDrag.DragImage.raycastTarget = false;
-    }
-
-    protected virtual void Start()
-    {
-        InitDragParentage();
-    }
+    protected virtual void Start(){InitDragParentage();}
 
     protected virtual void InitDragParentage()
     {

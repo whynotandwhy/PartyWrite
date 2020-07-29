@@ -19,11 +19,11 @@ public class Draggable : MonoBehaviour, ISlot<IItem>
     [SerializeField] protected int maxCount;
     public int MaxCount => maxCount;
 
-    protected DraggableManager<IDraggable<IItem>, IItem> _Manager;
+    protected DraggableManager<Draggable, IItem> _Manager;
 
     public void Start()
     {
-        _Manager = GetComponentInParent<DraggableManager<IDraggable<IItem>, IItem>>();
+        _Manager = GetComponentInParent<DraggableManager<Draggable, IItem>>();
         if (_Manager == default)
             throw new System.InvalidOperationException("SlotData Has no manager");
         _Manager.RegisterSlot(this);

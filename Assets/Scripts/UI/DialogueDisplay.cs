@@ -4,8 +4,8 @@ using TMPro;
 
 public class DialogueDisplay : CoreUIElement<string>
 {
-    [SerializeField] TMP_Text dialogueBox;
-    [SerializeField] GameObject dialogueBoxObject;
+    [SerializeField] TMP_Text dialogueBox = default;
+    [SerializeField] GameObject dialogueBoxObject = default;
 
     public override void UpdateUI(string primaryData)
     {
