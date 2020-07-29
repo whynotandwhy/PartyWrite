@@ -7,6 +7,7 @@ public class MiniGameplayLoop : MonoBehaviour
     [Header("Reference Scripts")]
     [SerializeField] protected CustomerDisplay customerDisplay;
     [SerializeField] protected TestDetailedItemDisplay itemDisplay;
+    [SerializeField] protected DialogueSorter dialogueSorter;
 
     [Header("Game Settings")][SerializeField] protected int totalCustomerCount = 2;
     [SerializeField] protected float customerTimerMax;
@@ -22,20 +23,33 @@ public class MiniGameplayLoop : MonoBehaviour
     protected float currentCustomerTime;
     protected bool countDownPaused = true;
 
+    public bool PauseTimer { get => countDownPaused; set => countDownPaused = value; }
+    public void ResetGame()
+    {
+        customerScores = new float[totalCustomerCount];
+        currentCustomerIndex = 0;
+
+        //Hide end panel;
+
+        IntroDialogue();
+        GenerateCustomer();       
+    }
+
     protected void Awake()
     {
         if (customerDisplay == null)
             customerDisplay = FindObjectOfType<CustomerDisplay>();
         if (itemDisplay == null)
             itemDisplay = FindObjectOfType<TestDetailedItemDisplay>();
+        if (dialogueSorter == null)
+            dialogueSorter = FindObjectOfType<DialogueSorter>();
     }
 
     protected void Start()
     {
         customerScores = new float[totalCustomerCount];
-        
-        // Intro dialogue
 
+        IntroDialogue();
         GenerateCustomer();
     }
 
@@ -43,6 +57,11 @@ public class MiniGameplayLoop : MonoBehaviour
     {
         if(!countDownPaused)
             CountDownTime();
+    }
+
+    protected void IntroDialogue()
+    {
+
     }
 
     protected void CountDownTime()
@@ -87,21 +106,19 @@ public class MiniGameplayLoop : MonoBehaviour
         
         customer = CustomerCreator.GenerateCustomer(100f);
         
-        //Resetting the current customer timer and starting countdown.
         currentCustomerTime = customerTimerMax;
         countDownPaused = false;
     }
 
     [ContextMenu("Evaluate Current Customer")]
-    protected void EvaluateCustomer()
+    public void EvaluateCustomer()
     {
-        //Customer dialogue goes in here for the "ask the customer button" which will update customer display meters.
-
         if (customer == null)
             throw new NotImplementedException("Customer has not been created.");
 
         customerEvaluation = SatisfactionEvaluator.CalculateSatifaction(customer, itemDisplay.Item);
         customerDisplay.UpdateUI(customerEvaluation);
+        dialogueSorter.DisplayCustomerDialogue(customer, itemDisplay.Item);
     }
     
     protected void DisplayFinalScores()
@@ -114,5 +131,5 @@ public class MiniGameplayLoop : MonoBehaviour
 
         //Either average our scores together in customerScores or display all of them individually on a panel
         //Could use CoreUIUpdater to create a "win" panel for this, too.
-    }
+    }   
 }

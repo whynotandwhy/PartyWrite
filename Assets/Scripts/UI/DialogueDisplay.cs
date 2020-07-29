@@ -9,7 +9,7 @@ public class DialogueDisplay : CoreUIElement<string>
 
     public override void UpdateUI(string primaryData)
     {
-        if(ClearedIfEmpty(primaryData));
+        if(ClearedIfEmpty(primaryData))
         {
             dialogueBoxObject.SetActive(true);
             UpdateText(dialogueBox, primaryData);
