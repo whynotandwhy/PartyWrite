@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
-    [SerializeField] AudioClip bgmSong;
+    [SerializeField] AudioClip titleBGMSong;
+    [SerializeField] AudioClip shopBGMSong;
     protected AudioSource[] audioSources;
     protected AudioSource sfxAudioSource;
     protected AudioSource bgmAudioSource;
@@ -15,6 +16,17 @@ public class AudioManager : MonoBehaviour
     public float BGMVolume { get => bgmAudioSource.volume; set => bgmAudioSource.volume = value; }
 
     public void PlaySoundEffect(AudioClip clipToPlay) => sfxAudioSource.PlayOneShot(clipToPlay);
+
+    public void PlayShopSong()
+    {
+        bgmAudioSource.clip = shopBGMSong;
+        bgmAudioSource.Play();
+    }
+    public void PlayTitleSong()
+    {
+        bgmAudioSource.clip = titleBGMSong;
+        bgmAudioSource.Play();
+    }
 
     protected void Awake()
     {
@@ -34,9 +46,5 @@ public class AudioManager : MonoBehaviour
         bgmAudioSource = audioSources[1];
     }
 
-    protected void Start()
-    {
-        bgmAudioSource.clip = bgmSong;
-        bgmAudioSource.Play();
-    }
+    protected void Start() => PlayTitleSong();
 }
