@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 using TMPro;
 
-public class CustomerDisplay : CoreUIElement<ICustomerDesires>
+public class CustomerRatingDisplay : CoreUIElement<ICustomerDesires>
 {
     [SerializeField] protected Image _Excitment;
     protected Image Excitment => _Excitment;

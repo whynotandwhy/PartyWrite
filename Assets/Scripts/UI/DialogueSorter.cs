@@ -8,7 +8,7 @@ public class DialogueSorter : MonoBehaviour
     [SerializeField] protected CustomerDialogueScriptableObject perfectValueChoice;
 
     //Player Dialogue
-    [SerializeField] protected PlayerDialogueScriptableObject[] introDialogue;
+    [SerializeField] protected PlayerDialogueScriptableObject introDialogue;
     [SerializeField] protected PlayerDialogueScriptableObject[] greetings;
     [SerializeField] protected PlayerDialogueScriptableObject[] farewells;
     [SerializeField] protected PlayerDialogueScriptableObject[] poorRatingsResponses;
@@ -20,6 +20,7 @@ public class DialogueSorter : MonoBehaviour
 
     //Cached references
     [SerializeField] protected MiniGameplayLoop gameManager;
+    [SerializeField] protected AvatarDisplayController avatarDisplayController;
 
     //State variables
     protected CustomerDialogueScriptableObject currentCustomerDialogue;
@@ -28,7 +29,10 @@ public class DialogueSorter : MonoBehaviour
     protected bool playerDialogueQueued = false;
     protected int playerDialogueIndex = 0;
 
+    public bool GenerateCustomer { get; set; }
+    public bool DialogueQueued { get => playerDialogueQueued; }
 
+    
     public void DisplayCustomerDialogue(ICustomerDesires customer, IItem itemDisplay)
     {
 
@@ -41,7 +45,9 @@ public class DialogueSorter : MonoBehaviour
 
     public void DisplayPlayerHelloGoodbye(bool greeting)
     {
-        int i = Random.Range(0, 6);
+        avatarDisplayController.PlayerHappy();
+
+        int i = Random.Range(0, 5);
 
         if (greeting)
             currentPlayerDialogue = greetings[i];
@@ -53,10 +59,11 @@ public class DialogueSorter : MonoBehaviour
 
     public void DisplayPlayerRatingDialogue(float customerRating)
     {
-        int i = Random.Range(0, 6);
+        int i = Random.Range(0, 5);
 
         if(customerRating > .84)
         {
+            avatarDisplayController.PlayerSmug();
             currentPlayerDialogue = greatRatingsResponses[i];
             playerDialogueQueued = true;
             return;
@@ -64,18 +71,21 @@ public class DialogueSorter : MonoBehaviour
 
         if(customerRating > .69)
         {
+            avatarDisplayController.PlayerNeutral();
             currentPlayerDialogue = mediocreRatingsResponses[i];
             playerDialogueQueued = true;
             return;
         }
 
+        avatarDisplayController.PlayerSad();
         currentPlayerDialogue = poorRatingsResponses[i];
         playerDialogueQueued = true;
     }
 
     public void DisplayPlayerIntro()
     {
-        //playerDialogueQueued
+        currentPlayerDialogue = introDialogue;
+        playerDialogueQueued = true;
     }
 
 
@@ -83,6 +93,8 @@ public class DialogueSorter : MonoBehaviour
     {
         if (gameManager == null)
             gameManager = FindObjectOfType<MiniGameplayLoop>();
+        if (avatarDisplayController == null)
+            avatarDisplayController = FindObjectOfType<AvatarDisplayController>();
     }
 
     protected void Update()
@@ -103,13 +115,20 @@ public class DialogueSorter : MonoBehaviour
 
             if(Input.anyKeyDown)
             {
-                playerDialogueIndex++;
+                ++playerDialogueIndex;
 
-                if(currentPlayerDialogue.dialogue.Length < playerDialogueIndex)
+                if(currentPlayerDialogue.dialogue.Length <= playerDialogueIndex)
                 {
                     playerDialogueIndex = 0;
                     playerDialogueQueued = false;
                     DisplayDialogue(string.Empty);
+
+                    if(GenerateCustomer)
+                    {
+                        gameManager.GenerateCustomer();
+                        GenerateCustomer = false;
+                    }
+
                     return;
                 }
 

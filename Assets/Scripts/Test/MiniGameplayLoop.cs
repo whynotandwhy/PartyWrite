@@ -5,9 +5,10 @@ public class MiniGameplayLoop : MonoBehaviour
 {
     //This would need to be exchanged for a shopping cart containing total values
     [Header("Reference Scripts")]
-    [SerializeField] protected CustomerDisplay customerDisplay;
+    [SerializeField] protected CustomerRatingDisplay customerRatingDisplay;
     [SerializeField] protected TestDetailedItemDisplay itemDisplay;
     [SerializeField] protected DialogueSorter dialogueSorter;
+    [SerializeField] protected AvatarDisplayController avatarDisplayController;
 
     [Header("Game Settings")][SerializeField] protected int totalCustomerCount = 2;
     [SerializeField] protected float customerTimerMax;
@@ -31,38 +32,48 @@ public class MiniGameplayLoop : MonoBehaviour
 
         //Hide end panel;
 
-        IntroDialogue();
-        GenerateCustomer();       
+        dialogueSorter.GenerateCustomer = true;
+        dialogueSorter.DisplayPlayerIntro();      
+    }
+
+    [ContextMenu("Generate New Customer")]
+    public void GenerateCustomer()
+    {
+        dialogueSorter.DisplayPlayerHelloGoodbye(true);
+
+        customer = CustomerCreator.GenerateCustomer(100f);
+        avatarDisplayController.GenerateRandomCustomer();
+
+        currentCustomerTime = customerTimerMax;
+        countDownPaused = false;
     }
 
     protected void Awake()
     {
-        if (customerDisplay == null)
-            customerDisplay = FindObjectOfType<CustomerDisplay>();
+        if (customerRatingDisplay == null)
+            customerRatingDisplay = FindObjectOfType<CustomerRatingDisplay>();
         if (itemDisplay == null)
             itemDisplay = FindObjectOfType<TestDetailedItemDisplay>();
         if (dialogueSorter == null)
             dialogueSorter = FindObjectOfType<DialogueSorter>();
+        if (avatarDisplayController == null)
+            avatarDisplayController = FindObjectOfType<AvatarDisplayController>();
     }
 
     protected void Start()
     {
         customerScores = new float[totalCustomerCount];
-
-        IntroDialogue();
-        GenerateCustomer();
+        dialogueSorter.GenerateCustomer = true;
+        dialogueSorter.DisplayPlayerIntro();
     }
 
     protected void Update()
     {
-        if(!countDownPaused)
+        if (!countDownPaused)
             CountDownTime();
-    }
-
-    protected void IntroDialogue()
-    {
-
-    }
+        else if (countDownPaused && !dialogueSorter.DialogueQueued)
+            GetCustomerFinalScore();
+    }  
 
     protected void CountDownTime()
     {
@@ -70,44 +81,32 @@ public class MiniGameplayLoop : MonoBehaviour
         currentCustomerTime = Mathf.Clamp(currentCustomerTime - Time.deltaTime, 0, customerTimerMax);
 
         if (currentCustomerTime <= 0f)
-            GetCustomerFinalScore();
+        {
+            avatarDisplayController.FadeIn = false;
+            dialogueSorter.DisplayPlayerHelloGoodbye(false);
+
+            countDownPaused = true;
+        }
+            
     }
 
     [ContextMenu("Get Final Score")]
     protected void GetCustomerFinalScore()
     {
-        //farewell dialogue goes here.
-        //Pauses the timer since the current customer is complete.
-        countDownPaused = true;
         float score = SatisfactionEvaluator.CalculateFinalScore(customer, itemDisplay.Item);
-
-        //Adds this score to the array
         customerScores[currentCustomerIndex] = score;
-        
 
         Debug.Log("Final score: " + score);
 
-        //If this is our final customer, get show the "end panel" and return
         if (currentCustomerIndex == totalCustomerCount - 1)
         {
             DisplayFinalScores();
             return;
         }
 
-        //otherwise incremement and start a new customer.
         currentCustomerIndex++;
-        GenerateCustomer();
-    }
-
-    [ContextMenu("Generate New Customer")]
-    protected void GenerateCustomer()
-    {
-        //Greetings dialogue goes here.
-        
-        customer = CustomerCreator.GenerateCustomer(100f);
-        
-        currentCustomerTime = customerTimerMax;
-        countDownPaused = false;
+        dialogueSorter.GenerateCustomer = true;
+        dialogueSorter.DisplayPlayerRatingDialogue(score);        
     }
 
     [ContextMenu("Evaluate Current Customer")]
@@ -117,7 +116,7 @@ public class MiniGameplayLoop : MonoBehaviour
             throw new NotImplementedException("Customer has not been created.");
 
         customerEvaluation = SatisfactionEvaluator.CalculateSatifaction(customer, itemDisplay.Item);
-        customerDisplay.UpdateUI(customerEvaluation);
+        customerRatingDisplay.UpdateUI(customerEvaluation);
         dialogueSorter.DisplayCustomerDialogue(customer, itemDisplay.Item);
     }
     
