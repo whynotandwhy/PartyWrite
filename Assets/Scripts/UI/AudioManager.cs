@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
-    [SerializeField] AudioClip titleBGMSong;
-    [SerializeField] AudioClip shopBGMSong;
+    [SerializeField] AudioClip titleBGMSong = default;
+    [SerializeField] AudioClip shopBGMSong = default;
     protected AudioSource[] audioSources;
     protected AudioSource sfxAudioSource;
     protected AudioSource bgmAudioSource;

@@ -2,11 +2,13 @@
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
+
 /// <summary>
 /// stores info of items being dragged between slots
 /// there will only be ever one of these shared between 
 /// Dragable managers with the ___ signature
 /// </summary>
+
 public class DragTracker<T> : MonoBehaviour
 {
     /// <summary>
