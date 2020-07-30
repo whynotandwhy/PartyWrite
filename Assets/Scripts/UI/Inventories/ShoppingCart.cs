@@ -9,5 +9,5 @@ using UnityEngine.EventSystems;
 /// </summary>
 public class ShoppingCart : CoreManger
 {
-
+    
 }

@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 604765955986244276}
   - component: {fileID: 906765481055089751}
   - component: {fileID: 3813431630321035542}
-  - component: {fileID: 2551049129299869917}
   m_Layer: 5
   m_Name: DraggableIcon
   m_TagString: Untagged
@@ -75,31 +74,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &2551049129299869917
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7995311239495533042}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9de3d7a1faf1809409944d00466d8e6b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  item:
-    _Exciting: 1
-    _Humor: 1
-    _Different: 1
-    _Regal: 1
-    _Cost: 1
-    _Name: Balloons
-    _Sprite: {fileID: 21300000, guid: d475c8992e5c4c643bb1cc177069bdad, type: 3}
-    _Description: ballons!
-    _PricePlayer: 500
-  index: 0
-  count: 1
-  maxCount: 1
 --- !u!1 &8018667328610895848
 GameObject:
   m_ObjectHideFlags: 0
@@ -111,6 +85,7 @@ GameObject:
   - component: {fileID: 1902163276235586083}
   - component: {fileID: 6884958012459239819}
   - component: {fileID: 2807583342843805043}
+  - component: {fileID: 843462966563766465}
   m_Layer: 5
   m_Name: DraggableTemplate
   m_TagString: Untagged
@@ -175,3 +150,29 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &843462966563766465
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8018667328610895848}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9de3d7a1faf1809409944d00466d8e6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  item:
+    _Exciting: 1
+    _Humor: 1
+    _Different: 1
+    _Regal: 1
+    _Cost: 1
+    _Name: Balloons
+    _Sprite: {fileID: 21300000, guid: d475c8992e5c4c643bb1cc177069bdad, type: 3}
+    _Description: ballons!
+    _PricePlayer: 500
+  index: 0
+  count: 1
+  maxCount: 1
+  icon: {fileID: 3813431630321035542}

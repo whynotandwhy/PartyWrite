@@ -2,7 +2,7 @@
 using UnityEngine.EventSystems;
 
 
-public class Draggable : MonoBehaviour, ISlot<IItem>
+public class Draggable : CoreUIElement<Draggable>, ISlot<IItem>
 {
     [SerializeField] protected Item item;
     public IItem DragItem => item;
@@ -19,40 +19,22 @@ public class Draggable : MonoBehaviour, ISlot<IItem>
     [SerializeField] protected int maxCount;
     public int MaxCount => maxCount;
 
-    protected DraggableManager<Draggable, IItem> _Manager;
+    protected CoreManger _Manager;
 
     public void Start()
     {
-        _Manager = GetComponentInParent<DraggableManager<Draggable, IItem>>();
+        _Manager = GetComponentInParent<CoreManger>();
         if (_Manager == default)
             throw new System.InvalidOperationException("SlotData Has no manager");
         _Manager.RegisterSlot(this);
+        this.UpdateUI(this);
     }
 
-    public void OnDrag(PointerEventData eventData)
-    {
-        _Manager.HandleDrag(eventData, this);
-    }
-
-    public void OnDrop(PointerEventData eventData)
-    {
-        _Manager.HandleSlotDrop(eventData, this);
-    }
-
-    public void OnEndDrag(PointerEventData eventData)
-    {
-        _Manager.OnDrop();
-    }
-
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        _Manager.HandleHover(this, eventData);
-    }
-
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        _Manager.HandleHover(default, eventData);
-    }
+    public void OnDrag(PointerEventData eventData){_Manager.HandleDrag(eventData, this);}
+    public void OnDrop(PointerEventData eventData) {_Manager.HandleSlotDrop(eventData, this);}
+    public void OnEndDrag(PointerEventData eventData){_Manager.OnDrop();}
+    public void OnPointerEnter(PointerEventData eventData) { _Manager.HandleHover(this, eventData); }
+    public void OnPointerExit(PointerEventData eventData) { _Manager.HandleHover(default, eventData); }
 
     public void Add(IItem item, int count)
     {
@@ -63,21 +45,17 @@ public class Draggable : MonoBehaviour, ISlot<IItem>
         }
         if (this.item != item)
             throw new System.InvalidOperationException("adding mismatch");
-        this.count += count - AddRemainder(count);
+        Set(this.item, this.count + count - AddRemainder(count));
     }
 
     public void Subtract(IItem item, int count)
     {
         if ((this.item == default)||(this.item != item))
             throw new System.InvalidOperationException("adding mismatch");
-        this.count -=  count - SubtractRemainder(count);
+        Set(this.item,  this.count - count - SubtractRemainder(count));
     }
 
-    protected int AddRemainder(int count)
-    {
-        return Mathf.Min(count, this.MaxCount - count);
-    }
-
+    protected int AddRemainder(int count){ return Mathf.Min(count, this.MaxCount - count);}
     public int CanAdd(IItem item, int count)
     {
         if (item == default)
@@ -89,11 +67,7 @@ public class Draggable : MonoBehaviour, ISlot<IItem>
         return count;
     }
 
-    protected int SubtractRemainder(int count)
-    {
-        return Mathf.Max(0,  count - this.count);
-    }
-
+    protected int SubtractRemainder(int count){return Mathf.Max(0,  count - this.count);}
     public int CanSubtract(IItem item, int count)
     {
         if (item == default)
@@ -109,6 +83,30 @@ public class Draggable : MonoBehaviour, ISlot<IItem>
     {
         this.item = item as Item;
         this.count = count;
+        if (count == 0)
+            this.item = default;
+        UpdateUI(this);
     }
+
+    public override void UpdateUI(Draggable primaryData)
+    {
+        if (ClearedIfEmpty(primaryData))
+            return;
+
+        icon.gameObject.SetActive(true);
+        icon.sprite = primaryData.item.Sprite;
+    }
+
+    protected override bool ClearedIfEmpty(Draggable newData)
+    {
+        if ((newData.item != default)&&newData.count !=0)
+            return false;
+
+        icon.gameObject.SetActive(false);
+
+        return true;
+    }
+
+    [SerializeField] protected UnityEngine.UI.Image icon;
 }
 

@@ -68,7 +68,7 @@ public class MiniGameplayLoop : MonoBehaviour
         Debug.Log("Final score: " + score);
 
         //If this is our final customer, get show the "end panel" and return
-        if (currentCustomerIndex == totalCustomerCount)
+        if (currentCustomerIndex == totalCustomerCount - 1)
         {
             DisplayFinalScores();
             return;

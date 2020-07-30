@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine.EventSystems;
 
+
+
 public class MyDragTracker : DragTracker<Draggable> { }
 
 /// <summary>
@@ -16,7 +18,7 @@ public class CoreManger : DraggableManager<Draggable, IItem>
 
     public override void HandleHover(Draggable dropee, PointerEventData eventData)
     {
-        if (SharedDrag.gameObject.activeInHierarchy)
+        if ((SharedDrag.SlotSource != default)||dropee == default||(dropee.Count == 0)||(dropee.DragItem == default))
             return;
 
         DetailedDisplay.UpdateUI((dropee==default)?default:dropee.DragItem);
@@ -38,7 +40,7 @@ public class CoreManger : DraggableManager<Draggable, IItem>
         {
             //dropped needs to be added to first so that we don't loose ref to the IItem;
             dropped.Add(SharedDrag.SlotSource.DragItem, transferSize - newvalue);
-            SharedDrag.SlotSource.Add(SharedDrag.SlotSource.DragItem, -transferSize + newvalue);
+            SharedDrag.SlotSource.Subtract(SharedDrag.SlotSource.DragItem, transferSize - newvalue);
         }
         else
         {
@@ -63,18 +65,16 @@ public class CoreManger : DraggableManager<Draggable, IItem>
 
     protected override void InitDragObject()
     {
-        {
-            if (SharedDrag != default)
-                return;
+        if (SharedDrag != default)
+            return;
 
-            var mouseObject = new GameObject();
-            SharedDrag = mouseObject.AddComponent<MyDragTracker>();
-            SharedDrag.Rect = mouseObject.AddComponent<RectTransform>();
-            if (DragSize == default)
-                DragSize = new Vector2(32, 32);
-            SharedDrag.Rect.sizeDelta = DragSize;
-            SharedDrag.DragImage = mouseObject.AddComponent<Image>();
-            SharedDrag.DragImage.raycastTarget = false;
-        }
+        var mouseObject = new GameObject();
+        SharedDrag = mouseObject.AddComponent<MyDragTracker>();
+        SharedDrag.Rect = mouseObject.AddComponent<RectTransform>();
+        if (DragSize == default)
+            DragSize = new Vector2(32, 32);
+        SharedDrag.Rect.sizeDelta = DragSize;
+        SharedDrag.DragImage = mouseObject.AddComponent<Image>();
+        SharedDrag.DragImage.raycastTarget = false;
     }
 }

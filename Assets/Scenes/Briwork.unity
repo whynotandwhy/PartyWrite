@@ -646,6 +646,17 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 247353994}
     m_Modifications:
+    - target: {fileID: 843462966563766465, guid: 74caa2bf31bac1149a61f482e7bfd83f,
+        type: 3}
+      propertyPath: index
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 843462966563766465, guid: 74caa2bf31bac1149a61f482e7bfd83f,
+        type: 3}
+      propertyPath: item._Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 6c44c53b5eefe674694ce4ae5f7d56e1,
+        type: 3}
     - target: {fileID: 1902163276235586083, guid: 74caa2bf31bac1149a61f482e7bfd83f,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1657,6 +1668,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1537093325}
     m_Modifications:
+    - target: {fileID: 843462966563766465, guid: 74caa2bf31bac1149a61f482e7bfd83f,
+        type: 3}
+      propertyPath: index
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 843462966563766465, guid: 74caa2bf31bac1149a61f482e7bfd83f,
+        type: 3}
+      propertyPath: count
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1902163276235586083, guid: 74caa2bf31bac1149a61f482e7bfd83f,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1861,6 +1882,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1537093325}
     m_Modifications:
+    - target: {fileID: 843462966563766465, guid: 74caa2bf31bac1149a61f482e7bfd83f,
+        type: 3}
+      propertyPath: index
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 843462966563766465, guid: 74caa2bf31bac1149a61f482e7bfd83f,
+        type: 3}
+      propertyPath: count
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1902163276235586083, guid: 74caa2bf31bac1149a61f482e7bfd83f,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2898,6 +2929,17 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 247353994}
     m_Modifications:
+    - target: {fileID: 843462966563766465, guid: 74caa2bf31bac1149a61f482e7bfd83f,
+        type: 3}
+      propertyPath: index
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 843462966563766465, guid: 74caa2bf31bac1149a61f482e7bfd83f,
+        type: 3}
+      propertyPath: item._Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 9455c1b226c6b2c4d9333c18fe33d0bf,
+        type: 3}
     - target: {fileID: 1902163276235586083, guid: 74caa2bf31bac1149a61f482e7bfd83f,
         type: 3}
       propertyPath: m_LocalPosition.x

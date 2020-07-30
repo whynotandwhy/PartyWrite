@@ -13,7 +13,7 @@ public abstract class DraggableManager<TDraggable,TItem> : MonoBehaviour
     /// slight optimization, unsure if changing the TDraggable will
     /// create new DragTracker, to be reviewed in future.
     /// </summary>
-    protected static DragTracker<TDraggable> SharedDrag = new DragTracker<TDraggable>();
+    protected static DragTracker<TDraggable> SharedDrag;
     protected static Transform DragTrackerParent;
 
     [SerializeField] protected Vector2 DragSize;
@@ -56,7 +56,7 @@ public abstract class DraggableManager<TDraggable,TItem> : MonoBehaviour
     /// </summary>
     public virtual void OnDrop()
     {
-        SharedDrag.gameObject.SetActive(false);
+        SharedDrag.SlotSource = default;
         SharedDrag.eventData = default;
     }
 
@@ -84,6 +84,7 @@ public abstract class DraggableManager<TDraggable,TItem> : MonoBehaviour
         //what do we do when we start dragging,
         SharedDrag.gameObject.SetActive(true);
         SharedDrag.eventData = eventData;
+        SharedDrag.SlotSource = slot;
         SharedDrag.DragImage.sprite = SelectSprite(slot);
     }
 
