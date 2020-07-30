@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a95aaa2a4087797478e81330d2d728fb, type: 3}
   m_Name: MoreCost
   m_EditorClassIdentifier: 
-  dialogue: 'Customer: I just don''t think I have enough for a decent party...'
+  dialogue: 'Customer: I just don''t think I''ve spent enough for a decent party...'
   category: 4

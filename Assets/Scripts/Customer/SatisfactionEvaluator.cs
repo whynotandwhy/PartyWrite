@@ -46,14 +46,14 @@ public class SatisfactionEvaluator
         return (excitingRating + humorRating + differentRating + regalRating + costRating) / 5;
     }
 
-    public static int CustomerCategoryPriority(ICustomerDesires customer)
+    public static int CustomerCategoryPriority(ICustomerDesires customer, IItem itemDisplay)
     {
         valueDifferentials = new float[5];
-        valueDifferentials[0] = customer.Exciting;
-        valueDifferentials[1] = customer.Humor;
-        valueDifferentials[2] = customer.Different;
-        valueDifferentials[3] = customer.Regal;
-        valueDifferentials[4] = customer.Cost;
+        valueDifferentials[0] = customer.Exciting / itemDisplay.Exciting;
+        valueDifferentials[1] = customer.Humor / itemDisplay.Humor;
+        valueDifferentials[2] = customer.Different / itemDisplay.Different;
+        valueDifferentials[3] = customer.Regal / itemDisplay.Regal;
+        valueDifferentials[4] = customer.Cost / itemDisplay.Cost;
 
         highestValue = valueDifferentials[0];
         lowestValue = valueDifferentials[0];
@@ -81,8 +81,8 @@ public class SatisfactionEvaluator
 
         else if (highestValue <= 1 && lowestValue < 1)
             return lowestCategory;
-
-            return 5;
+        
+        return 4;
     }
 
     public static float GetCategoryValue(int category)
