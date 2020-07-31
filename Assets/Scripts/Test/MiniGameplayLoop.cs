@@ -10,7 +10,7 @@ public class MiniGameplayLoop : MonoBehaviour
     [SerializeField] protected DialogueSorter dialogueSorter;
     [SerializeField] protected AvatarDisplayController avatarDisplayController;
 
-    [Header("Game Settings")][SerializeField] protected int totalCustomerCount = 2;
+    [Header("Game Settings")] [SerializeField] protected int totalCustomerCount = 2;
     [SerializeField] protected float customerTimerMax;
 
     protected ICustomerDesires customer;
@@ -33,7 +33,7 @@ public class MiniGameplayLoop : MonoBehaviour
         //Hide end panel;
 
         dialogueSorter.GenerateCustomer = true;
-        dialogueSorter.DisplayPlayerIntro();      
+        dialogueSorter.DisplayPlayerIntro();
     }
 
     [ContextMenu("Generate New Customer")]
@@ -73,7 +73,7 @@ public class MiniGameplayLoop : MonoBehaviour
             CountDownTime();
         else if (countDownPaused && !dialogueSorter.DialogueQueued)
             GetCustomerFinalScore();
-    }  
+    }
 
     protected void CountDownTime()
     {
@@ -87,7 +87,7 @@ public class MiniGameplayLoop : MonoBehaviour
 
             countDownPaused = true;
         }
-            
+
     }
 
     [ContextMenu("Get Final Score")]
@@ -106,7 +106,7 @@ public class MiniGameplayLoop : MonoBehaviour
 
         currentCustomerIndex++;
         dialogueSorter.GenerateCustomer = true;
-        dialogueSorter.DisplayPlayerRatingDialogue(score);        
+        dialogueSorter.DisplayPlayerRatingDialogue(score);
     }
 
     public void EvaluateCustomer(ICustomerDesires cart)
@@ -127,7 +127,7 @@ public class MiniGameplayLoop : MonoBehaviour
 
     protected void DisplayFinalScores()
     {
-        foreach(float score in customerScores)
+        foreach (float score in customerScores)
         {
             Debug.Log("Score for customer: " + score);
         }
@@ -135,5 +135,5 @@ public class MiniGameplayLoop : MonoBehaviour
 
         //Either average our scores together in customerScores or display all of them individually on a panel
         //Could use CoreUIUpdater to create a "win" panel for this, too.
-    }   
+    }
 }
