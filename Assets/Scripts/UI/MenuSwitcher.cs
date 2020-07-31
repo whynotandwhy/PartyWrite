@@ -11,7 +11,7 @@ public class MenuSwitcher : MonoBehaviour
     protected bool optionsPanelEnabled = false;
     protected bool gameStarted = false;
 
-    public void ToggleMenus()
+    public void ToggleOptionsMenus()
     {
         optionsPanelEnabled = !optionsPanelEnabled;
 
@@ -29,13 +29,16 @@ public class MenuSwitcher : MonoBehaviour
         }
     }
 
-    public void EnableGamePanel()
+    public void ToggleGamePanel()
     {
         gameStarted = !gameStarted;
 
         titleMenu.SetActive(!gameStarted);
         gamePanel.SetActive(gameStarted);
 
-        AudioManager.instance.PlayShopSong();
+        if (gameStarted)
+            AudioManager.instance.PlayShopSong();
+        else
+            AudioManager.instance.PlayTitleSong();
     }
 }

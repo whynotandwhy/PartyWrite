@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: Silly Hats
   m_EditorClassIdentifier: 
   _Exciting: 0
-  _Humor: 0
-  _Different: 0
+  _Humor: 2
+  _Different: 1
   _Regal: 0
-  _Cost: 0
-  _Name: 
-  _Sprite: {fileID: 0}
-  _Description: 
+  _Cost: 3
+  _Name: Silly Hats
+  _Sprite: {fileID: 21300000, guid: f32e4009ea888da4d9e32c2581ba207d, type: 3}
+  _Description: These will make great photos greater the morning after.
   _PricePlayer: 0

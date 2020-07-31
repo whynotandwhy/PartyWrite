@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: Silly Masks
   m_EditorClassIdentifier: 
   _Exciting: 0
-  _Humor: 0
-  _Different: 0
+  _Humor: 2
+  _Different: 2
   _Regal: 0
-  _Cost: 0
-  _Name: 
-  _Sprite: {fileID: 0}
-  _Description: 
+  _Cost: 4
+  _Name: Silly Masks
+  _Sprite: {fileID: 21300000, guid: 0bdc4395d0a70764cb2cdb13f6233e00, type: 3}
+  _Description: Fun for a party, necessary to get away with the crime.
   _PricePlayer: 0

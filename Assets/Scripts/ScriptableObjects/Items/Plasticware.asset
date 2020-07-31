@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _Exciting: 0
   _Humor: 0
-  _Different: 0
+  _Different: 1
   _Regal: 0
-  _Cost: 0
-  _Name: 
-  _Sprite: {fileID: 0}
+  _Cost: 1
+  _Name: A little cheap, but that's kind of the point, right?
+  _Sprite: {fileID: 21300000, guid: c8f11832b2781a243bf68b76240dbda9, type: 3}
   _Description: 
   _PricePlayer: 0

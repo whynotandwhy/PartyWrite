@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca915faf03a8bb04cb075e3d354b0650, type: 3}
   m_Name: Party Horn
   m_EditorClassIdentifier: 
-  _Exciting: 0
-  _Humor: 0
+  _Exciting: 2
+  _Humor: 2
   _Different: 0
   _Regal: 0
-  _Cost: 0
-  _Name: 
-  _Sprite: {fileID: 0}
-  _Description: 
+  _Cost: 4
+  _Name: Party Horn
+  _Sprite: {fileID: 21300000, guid: 320cba769cd202241b53f8af0d43ae1d, type: 3}
+  _Description: Give these to friends with kids for real fun.
   _PricePlayer: 0

@@ -15,9 +15,9 @@ MonoBehaviour:
   _Exciting: 0
   _Humor: 0
   _Different: 0
-  _Regal: 0
-  _Cost: 0
-  _Name: 
-  _Sprite: {fileID: 0}
-  _Description: 
+  _Regal: 3
+  _Cost: 3
+  _Name: Fine Wine
+  _Sprite: {fileID: 21300000, guid: 43562ce986c60af44b7e81504b108f58, type: 3}
+  _Description: Have a little, have a refined get together. Have a lot, have a party!
   _PricePlayer: 0

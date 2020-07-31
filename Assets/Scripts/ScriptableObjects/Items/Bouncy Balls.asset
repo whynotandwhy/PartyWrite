@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: Bouncy Balls
   m_EditorClassIdentifier: 
   _Exciting: 0
-  _Humor: 0
+  _Humor: 2
   _Different: 0
   _Regal: 0
-  _Cost: 0
-  _Name: 
-  _Sprite: {fileID: 0}
-  _Description: 
+  _Cost: 2
+  _Name: Bouncy Balls
+  _Sprite: {fileID: 21300000, guid: 9455c1b226c6b2c4d9333c18fe33d0bf, type: 3}
+  _Description: They bounce off of anything! Dirt, walls, friends...
   _PricePlayer: 0

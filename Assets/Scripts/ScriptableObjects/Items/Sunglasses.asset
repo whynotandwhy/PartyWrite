@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: Sunglasses
   m_EditorClassIdentifier: 
   _Exciting: 0
-  _Humor: 0
-  _Different: 0
+  _Humor: 1
+  _Different: 1
   _Regal: 0
-  _Cost: 0
-  _Name: 
-  _Sprite: {fileID: 0}
-  _Description: 
+  _Cost: 2
+  _Name: Sunglasses
+  _Sprite: {fileID: 21300000, guid: ee3e1faf49e3dae4a981f4666a6e843f, type: 3}
+  _Description: Everyone's cooler with sunglasses, even these.
   _PricePlayer: 0

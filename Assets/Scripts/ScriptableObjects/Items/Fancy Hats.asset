@@ -15,9 +15,9 @@ MonoBehaviour:
   _Exciting: 0
   _Humor: 0
   _Different: 0
-  _Regal: 0
-  _Cost: 0
-  _Name: 
-  _Sprite: {fileID: 0}
-  _Description: 
+  _Regal: 2
+  _Cost: 2
+  _Name: Fancy Hats
+  _Sprite: {fileID: 21300000, guid: a2cb0b22f4e90c94195947fd1f0068ec, type: 3}
+  _Description: What's a fancy party without fancy hats? Just a normal party, probably.
   _PricePlayer: 0

@@ -14,10 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _Exciting: 0
   _Humor: 0
-  _Different: 0
-  _Regal: 0
-  _Cost: 0
-  _Name: 
-  _Sprite: {fileID: 0}
-  _Description: 
+  _Different: 1
+  _Regal: 3
+  _Cost: 4
+  _Name: Charcuterie
+  _Sprite: {fileID: 21300000, guid: 99b53b3b609c4844d9357a010cac3751, type: 3}
+  _Description: Assorted meats to show all your friends how much more mature you
+    are than them.
   _PricePlayer: 0
