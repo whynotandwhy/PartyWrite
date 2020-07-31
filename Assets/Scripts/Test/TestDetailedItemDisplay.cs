@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TestDetailedItemDisplay : DetailedItemDisplay
 {
-    [SerializeField] protected Item item = new Item();
+    [SerializeField] protected Item item;
     public IItem Item => item;
 
     #region UI testing

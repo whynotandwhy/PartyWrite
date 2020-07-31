@@ -7,15 +7,21 @@ public class CustomerCreator
     protected static int maxRandomStat = 16;
 
     
-    public static ICustomerDesires GenerateCustomer(float startingIncome)
+    public static ICustomerDesires GenerateCustomer()
     {
+        float exciting = RandomizeCustomerStat();
+        float humor = RandomizeCustomerStat();
+        float different = RandomizeCustomerStat();
+        float regal = RandomizeCustomerStat();
+        float cost = exciting + humor + different + regal + 5;
+        
         customer =
             new Customer(
-                        RandomizeCustomerStat(),
-                        RandomizeCustomerStat(),
-                        RandomizeCustomerStat(),
-                        RandomizeCustomerStat(),
-                        startingIncome);
+                        exciting,
+                        humor,
+                        different,
+                        regal,
+                        cost);
 
         return customer;
     }

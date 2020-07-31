@@ -99,7 +99,7 @@ public class SatisfactionEvaluator
     }
 
 
-    public static IItem SimplifyGuess(IEnumerable<IItem> guesses)
+    public static ICustomerDesires SimplifyGuess(IEnumerable<IItem> guesses)
     {
         float excitement = 0;
         float humor = 0;
@@ -114,7 +114,7 @@ public class SatisfactionEvaluator
             regal += thing.Regal;
             cost += thing.Cost;
         }
-        return new Item(excitement, humor, different, regal, cost, string.Empty, default, string.Empty, 0);
+        return CustomerCreator.GenerateCustomerComparison(excitement, humor, different, regal, cost);
     }
 
 

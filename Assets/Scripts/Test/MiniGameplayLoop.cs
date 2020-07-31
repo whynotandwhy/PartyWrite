@@ -41,7 +41,7 @@ public class MiniGameplayLoop : MonoBehaviour
     {
         dialogueSorter.DisplayPlayerHelloGoodbye(true);
 
-        customer = CustomerCreator.GenerateCustomer(100f);
+        customer = CustomerCreator.GenerateCustomer();
         avatarDisplayController.GenerateRandomCustomer();
 
         currentCustomerTime = customerTimerMax;
