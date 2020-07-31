@@ -28,6 +28,7 @@ public class MiniGameplayLoop : MonoBehaviour
     protected bool countDownPaused = true;
 
     public bool PauseTimer { get => countDownPaused; set => countDownPaused = value; }
+
     public void ResetGame()
     {
         customerScores = new float[totalCustomerCount + 1];
@@ -124,6 +125,9 @@ public class MiniGameplayLoop : MonoBehaviour
 
     public void EvaluateCustomer(ICustomerDesires cart)
     {
+        if (customer == null)
+            return;
+
         customerEvaluation = SatisfactionEvaluator.CalculateSatifaction(customer, cart);
         customerRatingDisplay.UpdateUI(customerEvaluation);
         dialogueSorter?.DisplayCustomerDialogue(customer, cart);
@@ -133,8 +137,7 @@ public class MiniGameplayLoop : MonoBehaviour
     public void EvaluateCustomer()
     {
         if (customer == null)
-            throw new NotImplementedException("Customer has not been created.");
-
+            return;
         EvaluateCustomer(itemDisplay.Item);
     }
 
