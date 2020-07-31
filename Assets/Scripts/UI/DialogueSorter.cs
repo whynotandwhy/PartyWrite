@@ -14,7 +14,7 @@ public class DialogueSorter : MonoBehaviour
     [SerializeField] protected PlayerDialogueScriptableObject[] poorRatingsResponses;
     [SerializeField] protected PlayerDialogueScriptableObject[] mediocreRatingsResponses;
     [SerializeField] protected PlayerDialogueScriptableObject[] greatRatingsResponses;
-    
+
     //UI Elements
     [SerializeField] protected DialogueDisplay dialogueBox;
 
@@ -32,7 +32,7 @@ public class DialogueSorter : MonoBehaviour
     public bool GenerateCustomer { get; set; }
     public bool DialogueQueued { get => playerDialogueQueued; }
 
-    
+
     public void DisplayCustomerDialogue(ICustomerDesires customer, ICustomerDesires itemDisplay)
     {
 
@@ -51,7 +51,7 @@ public class DialogueSorter : MonoBehaviour
 
         if (greeting)
             currentPlayerDialogue = greetings[i];
-        else if(!greeting)
+        else if (!greeting)
             currentPlayerDialogue = farewells[i];
 
         playerDialogueQueued = true;
@@ -61,15 +61,15 @@ public class DialogueSorter : MonoBehaviour
     {
         int i = Random.Range(0, 5);
 
-        if(customerRating > .84)
+        if (customerRating > .84)
         {
             avatarDisplayController.PlayerSmug();
             currentPlayerDialogue = greatRatingsResponses[i];
             playerDialogueQueued = true;
             return;
-        }            
+        }
 
-        if(customerRating > .69)
+        if (customerRating > .69)
         {
             avatarDisplayController.PlayerNeutral();
             currentPlayerDialogue = mediocreRatingsResponses[i];
@@ -99,7 +99,7 @@ public class DialogueSorter : MonoBehaviour
 
     protected void Update()
     {
-        if(customerDialogueQueued)
+        if (customerDialogueQueued)
         {
             DisplayDialogue(currentCustomerDialogue.dialogue);
             if (Input.anyKeyDown)
@@ -109,21 +109,21 @@ public class DialogueSorter : MonoBehaviour
             }
         }
 
-        if(playerDialogueQueued)
+        if (playerDialogueQueued)
         {
             DisplayDialogue(currentPlayerDialogue.dialogue[playerDialogueIndex]);
 
-            if(Input.anyKeyDown)
+            if (Input.anyKeyDown)
             {
                 ++playerDialogueIndex;
 
-                if(currentPlayerDialogue.dialogue.Length <= playerDialogueIndex)
+                if (currentPlayerDialogue.dialogue.Length <= playerDialogueIndex)
                 {
                     playerDialogueIndex = 0;
                     playerDialogueQueued = false;
                     DisplayDialogue(string.Empty);
 
-                    if(GenerateCustomer)
+                    if (GenerateCustomer)
                     {
                         gameManager.GenerateCustomer();
                         GenerateCustomer = false;
@@ -134,7 +134,7 @@ public class DialogueSorter : MonoBehaviour
 
                 DisplayDialogue(currentPlayerDialogue.dialogue[playerDialogueIndex]);
             }
-        }        
+        }
     }
 
     private void DisplayDialogue(string dialogue) => dialogueBox.UpdateUI(dialogue);
@@ -154,7 +154,7 @@ public class DialogueSorter : MonoBehaviour
             {
                 if (worstCategory == (int)higherValueChoices[i].category)
                     return higherValueChoices[i];
-            }                
+            }
         }
 
         else if (categoryValue < 1)
