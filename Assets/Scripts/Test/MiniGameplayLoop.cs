@@ -131,15 +131,7 @@ public class MiniGameplayLoop : MonoBehaviour
         customerEvaluation = SatisfactionEvaluator.CalculateSatifaction(customer, cart);
         customerRatingDisplay.UpdateUI(customerEvaluation);
         dialogueSorter?.DisplayCustomerDialogue(customer, cart);
-    }
-
-    [ContextMenu("Evaluate Current Customer")]
-    public void EvaluateCustomer()
-    {
-        if (customer == null)
-            return;
-        EvaluateCustomer(itemDisplay.Item);
-    }
+    }    
 
     protected void DisplayFinalScores()
     {
