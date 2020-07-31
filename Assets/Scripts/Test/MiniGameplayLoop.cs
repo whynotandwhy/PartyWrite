@@ -7,7 +7,7 @@ public class MiniGameplayLoop : MonoBehaviour
     [Header("Reference Scripts")]
     [SerializeField] protected CustomerDisplay customerDisplay;
     [SerializeField] protected TestDetailedItemDisplay itemDisplay;
-    [SerializeField] protected DialogueSorter dialogueSorter;
+    [SerializeField] protected DialogueTextUpdater dialogueSorter;
 
     [Header("Game Settings")][SerializeField] protected int totalCustomerCount = 2;
     [SerializeField] protected float customerTimerMax;
@@ -42,7 +42,7 @@ public class MiniGameplayLoop : MonoBehaviour
         if (itemDisplay == null)
             itemDisplay = FindObjectOfType<TestDetailedItemDisplay>();
         if (dialogueSorter == null)
-            dialogueSorter = FindObjectOfType<DialogueSorter>();
+            dialogueSorter = FindObjectOfType<DialogueTextUpdater>();
     }
 
     protected void Start()
@@ -110,15 +110,20 @@ public class MiniGameplayLoop : MonoBehaviour
         countDownPaused = false;
     }
 
+    public void EvaluateCustomer(ICustomerDesires cart)
+    {
+        customerEvaluation = SatisfactionEvaluator.CalculateSatifaction(customer, cart);
+        customerDisplay.UpdateUI(customerEvaluation);
+        dialogueSorter?.DisplayCustomerDialogue(customer, cart);
+    }
+
     [ContextMenu("Evaluate Current Customer")]
     public void EvaluateCustomer()
     {
         if (customer == null)
             throw new NotImplementedException("Customer has not been created.");
-
-        customerEvaluation = SatisfactionEvaluator.CalculateSatifaction(customer, itemDisplay.Item);
-        customerDisplay.UpdateUI(customerEvaluation);
-        dialogueSorter.DisplayCustomerDialogue(customer, itemDisplay.Item);
+        
+        EvaluateCustomer(itemDisplay.Item);
     }
     
     protected void DisplayFinalScores()

@@ -1,6 +1,9 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections;
+using UnityEngine;
+using UnityEngine.UI;
 
-public class DialogueSorter : MonoBehaviour
+public class DialogueTextUpdater : MonoBehaviour
 {
     //Customer Dialogue
     [SerializeField] protected CustomerDialogueScriptableObject[] higherValueChoices;
@@ -9,7 +12,6 @@ public class DialogueSorter : MonoBehaviour
 
     //Player Dialogue
     [SerializeField] protected PlayerDialogueScriptableObject[] introDialogue;
-    [SerializeField] protected PlayerDialogueScriptableObject[] greetings;
     [SerializeField] protected PlayerDialogueScriptableObject[] farewells;
     [SerializeField] protected PlayerDialogueScriptableObject[] poorRatingsResponses;
     [SerializeField] protected PlayerDialogueScriptableObject[] mediocreRatingsResponses;
@@ -19,15 +21,23 @@ public class DialogueSorter : MonoBehaviour
     [SerializeField] protected DialogueDisplay dialogueBox;
 
     //Cached references
-    [SerializeField] protected MiniGameplayLoop gameManager;
+    [SerializeField] protected GameManager gameManager;
 
     //State variables
-    protected CustomerDialogueScriptableObject currentCustomerDialogue;
-    protected PlayerDialogueScriptableObject currentPlayerDialogue;
-    protected bool customerDialogueQueued = false;
-    protected bool playerDialogueQueued = false;
-    protected int playerDialogueIndex = 0;
+    protected CustomerDialogueScriptableObject currentDialogue;
+    protected int currentDialogueIndex = 0;
+    protected bool dialogueQueued = false;
 
+
+    public void DisplayCustomerDialogue(ICustomerDesires customer, ICustomerDesires itemDisplay)
+    {
+        var worstCategory = SatisfactionEvaluator.CustomerCategoryPriority(customer, itemDisplay);
+        var worstCategoryValue = SatisfactionEvaluator.GetCategoryValue(worstCategory);
+
+        currentDialogue = GetCustomerDialogue(worstCategory, worstCategoryValue);
+        currentDialogueIndex = 0;
+        dialogueQueued = true;
+    }
 
     public void DisplayCustomerDialogue(ICustomerDesires customer, IItem itemDisplay)
     {
@@ -35,90 +45,29 @@ public class DialogueSorter : MonoBehaviour
         var worstCategory = SatisfactionEvaluator.CustomerCategoryPriority(customer, itemDisplay);
         var worstCategoryValue = SatisfactionEvaluator.GetCategoryValue(worstCategory);
 
-        currentCustomerDialogue = GetCustomerDialogue(worstCategory, worstCategoryValue);
-        customerDialogueQueued = true;
+        currentDialogue = GetCustomerDialogue(worstCategory, worstCategoryValue);
+        currentDialogueIndex = 0;
+        dialogueQueued = true;
     }
-
-    public void DisplayPlayerHelloGoodbye(bool greeting)
-    {
-        int i = Random.Range(0, 6);
-
-        if (greeting)
-            currentPlayerDialogue = greetings[i];
-        else if(!greeting)
-            currentPlayerDialogue = farewells[i];
-
-        playerDialogueQueued = true;
-    }
-
-    public void DisplayPlayerRatingDialogue(float customerRating)
-    {
-        int i = Random.Range(0, 6);
-
-        if(customerRating > .84)
-        {
-            currentPlayerDialogue = greatRatingsResponses[i];
-            playerDialogueQueued = true;
-            return;
-        }            
-
-        if(customerRating > .69)
-        {
-            currentPlayerDialogue = mediocreRatingsResponses[i];
-            playerDialogueQueued = true;
-            return;
-        }
-
-        currentPlayerDialogue = poorRatingsResponses[i];
-        playerDialogueQueued = true;
-    }
-
-    public void DisplayPlayerIntro()
-    {
-        //playerDialogueQueued
-    }
-
 
     protected void Awake()
     {
         if (gameManager == null)
-            gameManager = FindObjectOfType<MiniGameplayLoop>();
+            gameManager = FindObjectOfType<GameManager>();
     }
 
     protected void Update()
     {
-        if(customerDialogueQueued)
+        if(dialogueQueued)
         {
-            DisplayDialogue(currentCustomerDialogue.dialogue);
-            if (Input.anyKeyDown)
-            {
-                DisplayDialogue(string.Empty);
-                customerDialogueQueued = false;
-            }
+            DisplayDialogue(currentDialogue);
         }
-
-        if(playerDialogueQueued)
-        {
-            DisplayDialogue(currentPlayerDialogue.dialogue[playerDialogueIndex]);
-
-            if(Input.anyKeyDown)
-            {
-                playerDialogueIndex++;
-
-                if(currentPlayerDialogue.dialogue.Length < playerDialogueIndex)
-                {
-                    playerDialogueIndex = 0;
-                    playerDialogueQueued = false;
-                    DisplayDialogue(string.Empty);
-                    return;
-                }
-
-                DisplayDialogue(currentPlayerDialogue.dialogue[playerDialogueIndex]);
-            }
-        }        
     }
 
-    private void DisplayDialogue(string dialogue) => dialogueBox.UpdateUI(dialogue);
+    private void DisplayDialogue(CustomerDialogueScriptableObject dialogue)
+    {
+        dialogueBox.UpdateUI(dialogue.dialogue);
+    }
 
     protected CustomerDialogueScriptableObject GetCustomerDialogue(int worstCategory, float categoryValue)
     {
