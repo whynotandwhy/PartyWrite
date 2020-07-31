@@ -1049,6 +1049,8 @@ MonoBehaviour:
   itemDisplay: {fileID: 180855036}
   dialogueSorter: {fileID: 1329734405}
   avatarDisplayController: {fileID: 18240180}
+  winPanel: {fileID: 0}
+  timerUpdater: {fileID: 0}
   totalCustomerCount: 5
   customerTimerMax: 10
 --- !u!4 &180855035
@@ -8057,7 +8059,7 @@ MonoBehaviour:
   index: 0
   count: 1
   maxCount: 1
-  icon: {fileID: 1257074516}
+  icon: {fileID: 1746964921}
 --- !u!114 &1345693241
 MonoBehaviour:
   m_ObjectHideFlags: 0
