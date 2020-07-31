@@ -1,6 +1,9 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections;
+using UnityEngine;
+using UnityEngine.UI;
 
-public class DialogueSorter : MonoBehaviour
+public class DialogueTextUpdater : MonoBehaviour
 {
     //Customer Dialogue
     [SerializeField] protected CustomerDialogueScriptableObject[] higherValueChoices;
@@ -23,11 +26,9 @@ public class DialogueSorter : MonoBehaviour
     [SerializeField] protected AvatarDisplayController avatarDisplayController;
 
     //State variables
-    protected CustomerDialogueScriptableObject currentCustomerDialogue;
-    protected PlayerDialogueScriptableObject currentPlayerDialogue;
-    protected bool customerDialogueQueued = false;
-    protected bool playerDialogueQueued = false;
-    protected int playerDialogueIndex = 0;
+    protected CustomerDialogueScriptableObject currentDialogue;
+    protected int currentDialogueIndex = 0;
+    protected bool dialogueQueued = false;
 
     public bool GenerateCustomer { get; set; }
     public bool DialogueQueued { get => playerDialogueQueued; }
@@ -39,11 +40,12 @@ public class DialogueSorter : MonoBehaviour
         var worstCategory = SatisfactionEvaluator.CustomerCategoryPriority(customer, itemDisplay);
         var worstCategoryValue = SatisfactionEvaluator.GetCategoryValue(worstCategory);
 
-        currentCustomerDialogue = GetCustomerDialogue(worstCategory, worstCategoryValue);
-        customerDialogueQueued = true;
+        currentDialogue = GetCustomerDialogue(worstCategory, worstCategoryValue);
+        currentDialogueIndex = 0;
+        dialogueQueued = true;
     }
 
-    public void DisplayPlayerHelloGoodbye(bool greeting)
+    public void DisplayCustomerDialogue(ICustomerDesires customer, IItem itemDisplay)
     {
         avatarDisplayController.PlayerHappy();
 
@@ -54,7 +56,9 @@ public class DialogueSorter : MonoBehaviour
         else if(!greeting)
             currentPlayerDialogue = farewells[i];
 
-        playerDialogueQueued = true;
+        currentDialogue = GetCustomerDialogue(worstCategory, worstCategoryValue);
+        currentDialogueIndex = 0;
+        dialogueQueued = true;
     }
 
     public void DisplayPlayerRatingDialogue(float customerRating)
@@ -99,15 +103,11 @@ public class DialogueSorter : MonoBehaviour
 
     protected void Update()
     {
-        if(customerDialogueQueued)
+        if(dialogueQueued)
         {
-            DisplayDialogue(currentCustomerDialogue.dialogue);
-            if (Input.anyKeyDown)
-            {
-                DisplayDialogue(string.Empty);
-                customerDialogueQueued = false;
-            }
+            DisplayDialogue(currentDialogue);
         }
+    }
 
         if(playerDialogueQueued)
         {
@@ -136,8 +136,6 @@ public class DialogueSorter : MonoBehaviour
             }
         }        
     }
-
-    private void DisplayDialogue(string dialogue) => dialogueBox.UpdateUI(dialogue);
 
     protected CustomerDialogueScriptableObject GetCustomerDialogue(int worstCategory, float categoryValue)
     {

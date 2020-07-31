@@ -15,17 +15,21 @@ public class SatisfactionEvaluator
     protected static int highestCategory;
     protected static int lowestCategory;
 
-
+    public static ICustomerDesires CalculateSatifaction
+        (ICustomerDesires goals, ICustomerDesires guess)
+    {
+        return CustomerCreator.GenerateCustomerComparison(
+            CompareValues(goals.Exciting, guess.Exciting),
+            CompareValues(goals.Humor, guess.Humor),
+            CompareValues(goals.Different, guess.Different),
+            CompareValues(goals.Regal, guess.Regal),
+            goals.Cost - guess.Cost
+        );
+    }
     public static ICustomerDesires CalculateSatifaction
         (ICustomerDesires goals, IItem guess)
     {
-        return CustomerCreator.GenerateCustomerComparison(
-                CompareValues(goals.Exciting, guess.Exciting),
-                CompareValues(goals.Humor, guess.Humor),
-                CompareValues(goals.Different, guess.Different),
-                CompareValues(goals.Regal, guess.Regal),
-                goals.Cost - guess.Cost
-            );
+        return CalculateSatifaction(goals, (ICustomerDesires)guess);
     }
 
     public static float CalculateFinalScore(ICustomerDesires goals, IItem guess)
@@ -46,7 +50,7 @@ public class SatisfactionEvaluator
         return (excitingRating + humorRating + differentRating + regalRating + costRating) / 5;
     }
 
-    public static int CustomerCategoryPriority(ICustomerDesires customer, IItem itemDisplay)
+    public static int CustomerCategoryPriority(ICustomerDesires customer, ICustomerDesires itemDisplay)
     {
         valueDifferentials = new float[5];
         valueDifferentials[0] = customer.Exciting / itemDisplay.Exciting;
@@ -81,8 +85,12 @@ public class SatisfactionEvaluator
 
         else if (highestValue <= 1 && lowestValue < 1)
             return lowestCategory;
-        
+
         return 4;
+    }
+    public static int CustomerCategoryPriority(ICustomerDesires customer, IItem itemDisplay)
+    {
+        return CustomerCategoryPriority(customer, (ICustomerDesires)itemDisplay);
     }
 
     public static float GetCategoryValue(int category)
