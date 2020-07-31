@@ -4,6 +4,22 @@ using UnityEngine.EventSystems;
 
 public class Draggable : CoreUIElement<Draggable>, ISlot<IItem>
 {
+    [SerializeField] protected bool RightClickClears = true;
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        if ((RightClickClears) && (eventData.button == PointerEventData.InputButton.Right))
+        {
+            Set(default, 0);
+            Manager?.OnDrop();
+        }
+    }
+    public void SetIndex(int index)
+    {
+        this.index = index;
+    }
+
+
     [SerializeField] protected Item item;
     public IItem DragItem => item;
 
@@ -20,6 +36,7 @@ public class Draggable : CoreUIElement<Draggable>, ISlot<IItem>
     public int MaxCount => maxCount;
 
     protected CoreManger _Manager;
+    public CoreManger Manager => _Manager;
 
     public void Start()
     {
@@ -43,14 +60,18 @@ public class Draggable : CoreUIElement<Draggable>, ISlot<IItem>
             Set(item, count);
             return;
         }
+#pragma warning disable CS0253 // Possible unintended reference comparison; right hand side needs cast
         if (this.item != item)
+#pragma warning restore CS0253 // Possible unintended reference comparison; right hand side needs cast
             throw new System.InvalidOperationException("adding mismatch");
         Set(this.item, this.count + count - AddRemainder(count));
     }
 
     public void Subtract(IItem item, int count)
     {
+#pragma warning disable CS0253 // Possible unintended reference comparison; right hand side needs cast
         if ((this.item == default)||(this.item != item))
+#pragma warning restore CS0253 // Possible unintended reference comparison; right hand side needs cast
             throw new System.InvalidOperationException("adding mismatch");
         Set(this.item,  this.count - count - SubtractRemainder(count));
     }
@@ -61,7 +82,9 @@ public class Draggable : CoreUIElement<Draggable>, ISlot<IItem>
         if (item == default)
             return count;
 
+#pragma warning disable CS0253 // Possible unintended reference comparison; right hand side needs cast
         if ((this.item == default) || (this.item == item))
+#pragma warning restore CS0253 // Possible unintended reference comparison; right hand side needs cast
             return AddRemainder(count);
 
         return count;
@@ -73,8 +96,10 @@ public class Draggable : CoreUIElement<Draggable>, ISlot<IItem>
         if (item == default)
             return count;
 
-        if ((this.item == default) || (this.item == item))
-            return SubtractRemainder(count) ;
+#pragma warning disable CS0253 // Possible unintended reference comparison; right hand side needs cast
+        if ((this.item == default) || (this.item == item) || (this.count == 0))
+#pragma warning restore CS0253 // Possible unintended reference comparison; right hand side needs cast
+            return SubtractRemainder(count);
 
         return count;
     }
