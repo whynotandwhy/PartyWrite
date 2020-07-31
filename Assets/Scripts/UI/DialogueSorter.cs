@@ -39,11 +39,12 @@ public class DialogueSorter : MonoBehaviour
         var worstCategory = SatisfactionEvaluator.CustomerCategoryPriority(customer, itemDisplay);
         var worstCategoryValue = SatisfactionEvaluator.GetCategoryValue(worstCategory);
 
-        currentCustomerDialogue = GetCustomerDialogue(worstCategory, worstCategoryValue);
-        customerDialogueQueued = true;
+        currentDialogue = GetCustomerDialogue(worstCategory, worstCategoryValue);
+        currentDialogueIndex = 0;
+        dialogueQueued = true;
     }
 
-    public void DisplayPlayerHelloGoodbye(bool greeting)
+    public void DisplayCustomerDialogue(ICustomerDesires customer, IItem itemDisplay)
     {
         avatarDisplayController.PlayerHappy();
 
