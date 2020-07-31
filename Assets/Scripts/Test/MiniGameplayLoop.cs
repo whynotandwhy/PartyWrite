@@ -109,17 +109,22 @@ public class MiniGameplayLoop : MonoBehaviour
         dialogueSorter.DisplayPlayerRatingDialogue(score);        
     }
 
+    public void EvaluateCustomer(ICustomerDesires cart)
+    {
+        customerEvaluation = SatisfactionEvaluator.CalculateSatifaction(customer, cart);
+        customerRatingDisplay.UpdateUI(customerEvaluation);
+        dialogueSorter?.DisplayCustomerDialogue(customer, cart);
+    }
+
     [ContextMenu("Evaluate Current Customer")]
     public void EvaluateCustomer()
     {
         if (customer == null)
             throw new NotImplementedException("Customer has not been created.");
 
-        customerEvaluation = SatisfactionEvaluator.CalculateSatifaction(customer, itemDisplay.Item);
-        customerRatingDisplay.UpdateUI(customerEvaluation);
-        dialogueSorter.DisplayCustomerDialogue(customer, itemDisplay.Item);
+        EvaluateCustomer(itemDisplay.Item);
     }
-    
+
     protected void DisplayFinalScores()
     {
         foreach(float score in customerScores)

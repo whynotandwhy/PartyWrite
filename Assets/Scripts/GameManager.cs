@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour
     protected Customer currentCustomer;
     protected CustomerCreator customerCreator;
     protected SatisfactionEvaluator satisfactionEvaluator;
-    protected DialogueSorter textUpdater;
+    //protected DialogueTextUpdater textUpdater;
     protected int customersPerGame;
     protected int customersHelped;
     protected double[] roundRatings;
@@ -48,7 +48,7 @@ public class GameManager : MonoBehaviour
         instance = this;
         #endregion
 
-        textUpdater = FindObjectOfType<DialogueSorter>();
+        //textUpdater = FindObjectOfType<DialogueTextUpdater>();
     }
 
     protected void Start()

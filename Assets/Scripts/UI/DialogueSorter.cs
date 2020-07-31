@@ -33,7 +33,7 @@ public class DialogueSorter : MonoBehaviour
     public bool DialogueQueued { get => playerDialogueQueued; }
 
     
-    public void DisplayCustomerDialogue(ICustomerDesires customer, IItem itemDisplay)
+    public void DisplayCustomerDialogue(ICustomerDesires customer, ICustomerDesires itemDisplay)
     {
 
         var worstCategory = SatisfactionEvaluator.CustomerCategoryPriority(customer, itemDisplay);

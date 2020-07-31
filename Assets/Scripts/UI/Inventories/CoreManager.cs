@@ -18,7 +18,7 @@ public class CoreManger : DraggableManager<Draggable, IItem>
 
     public override void HandleHover(Draggable dropee, PointerEventData eventData)
     {
-        if ((SharedDrag.SlotSource != default)||dropee == default||(dropee.Count == 0)||(dropee.DragItem == default))
+        if (dropee == default || (SharedDrag.SlotSource != default)||(dropee.Count == 0)||(dropee.DragItem == default))
             return;
 
         DetailedDisplay.UpdateUI((dropee==default)?default:dropee.DragItem);

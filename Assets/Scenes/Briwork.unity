@@ -404,6 +404,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   customerDisplay: {fileID: 18240179}
   itemDisplay: {fileID: 1215868455}
+  dialogueSorter: {fileID: 0}
   totalCustomerCount: 2
   customerTimerMax: 0
 --- !u!4 &180855035
@@ -6340,8 +6341,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b967d013e4139247abb444be79831af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DragSize: {x: 5, y: 5}
+  DragSize: {x: 50, y: 50}
   DetailedDisplay: {fileID: 1215868455}
+  gamePlay: {fileID: 180855034}
 --- !u!1 &1642341602
 GameObject:
   m_ObjectHideFlags: 0

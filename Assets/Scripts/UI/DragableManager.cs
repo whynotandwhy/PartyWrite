@@ -58,6 +58,7 @@ public abstract class DraggableManager<TDraggable,TItem> : MonoBehaviour
     {
         SharedDrag.SlotSource = default;
         SharedDrag.eventData = default;
+        SharedDrag.gameObject.SetActive(false);
     }
 
     public abstract void HandleHover(TDraggable dropee, PointerEventData eventData);
