@@ -14,6 +14,10 @@ public class Draggable : CoreUIElement<Draggable>, ISlot<IItem>
             Manager?.OnDrop();
         }
     }
+    public void SetIndex(int index)
+    {
+        this.index = index;
+    }
 
 
     [SerializeField] protected Item item;
@@ -56,14 +60,18 @@ public class Draggable : CoreUIElement<Draggable>, ISlot<IItem>
             Set(item, count);
             return;
         }
+#pragma warning disable CS0253 // Possible unintended reference comparison; right hand side needs cast
         if (this.item != item)
+#pragma warning restore CS0253 // Possible unintended reference comparison; right hand side needs cast
             throw new System.InvalidOperationException("adding mismatch");
         Set(this.item, this.count + count - AddRemainder(count));
     }
 
     public void Subtract(IItem item, int count)
     {
+#pragma warning disable CS0253 // Possible unintended reference comparison; right hand side needs cast
         if ((this.item == default)||(this.item != item))
+#pragma warning restore CS0253 // Possible unintended reference comparison; right hand side needs cast
             throw new System.InvalidOperationException("adding mismatch");
         Set(this.item,  this.count - count - SubtractRemainder(count));
     }
@@ -74,7 +82,9 @@ public class Draggable : CoreUIElement<Draggable>, ISlot<IItem>
         if (item == default)
             return count;
 
+#pragma warning disable CS0253 // Possible unintended reference comparison; right hand side needs cast
         if ((this.item == default) || (this.item == item))
+#pragma warning restore CS0253 // Possible unintended reference comparison; right hand side needs cast
             return AddRemainder(count);
 
         return count;
@@ -86,7 +96,9 @@ public class Draggable : CoreUIElement<Draggable>, ISlot<IItem>
         if (item == default)
             return count;
 
+#pragma warning disable CS0253 // Possible unintended reference comparison; right hand side needs cast
         if ((this.item == default) || (this.item == item) || (this.count == 0))
+#pragma warning restore CS0253 // Possible unintended reference comparison; right hand side needs cast
             return SubtractRemainder(count);
 
         return count;
