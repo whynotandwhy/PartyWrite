@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using UnityEngine;
 
 public class MiniGameplayLoop : MonoBehaviour
@@ -9,6 +10,7 @@ public class MiniGameplayLoop : MonoBehaviour
     [SerializeField] protected TestDetailedItemDisplay itemDisplay;
     [SerializeField] protected DialogueSorter dialogueSorter;
     [SerializeField] protected AvatarDisplayController avatarDisplayController;
+    [SerializeField] protected WinPanelUpdater winPanel;
 
     [Header("Game Settings")] [SerializeField] protected int totalCustomerCount = 2;
     [SerializeField] protected float customerTimerMax;
@@ -27,10 +29,10 @@ public class MiniGameplayLoop : MonoBehaviour
     public bool PauseTimer { get => countDownPaused; set => countDownPaused = value; }
     public void ResetGame()
     {
-        customerScores = new float[totalCustomerCount];
+        customerScores = new float[totalCustomerCount + 1];
         currentCustomerIndex = 0;
 
-        //Hide end panel;
+        winPanel.UpdateUI(customerScores);
 
         dialogueSorter.GenerateCustomer = true;
         dialogueSorter.DisplayPlayerIntro();
@@ -58,11 +60,13 @@ public class MiniGameplayLoop : MonoBehaviour
             dialogueSorter = FindObjectOfType<DialogueSorter>();
         if (avatarDisplayController == null)
             avatarDisplayController = FindObjectOfType<AvatarDisplayController>();
+        if (winPanel == null)
+            winPanel = FindObjectOfType<WinPanelUpdater>();
     }
 
     protected void Start()
     {
-        customerScores = new float[totalCustomerCount];
+        customerScores = new float[totalCustomerCount + 1];
         dialogueSorter.GenerateCustomer = true;
         dialogueSorter.DisplayPlayerIntro();
     }
@@ -127,13 +131,14 @@ public class MiniGameplayLoop : MonoBehaviour
 
     protected void DisplayFinalScores()
     {
-        foreach (float score in customerScores)
-        {
-            Debug.Log("Score for customer: " + score);
-        }
-        //Maybe some kind of outro dialogue here
+        var finalScore = 0f;
+        foreach(float score in customerScores)
+            finalScore += score;
 
-        //Either average our scores together in customerScores or display all of them individually on a panel
-        //Could use CoreUIUpdater to create a "win" panel for this, too.
+        finalScore /= totalCustomerCount;
+
+        customerScores[totalCustomerCount] = finalScore;
+
+        winPanel.UpdateUI(customerScores);
     }
 }

@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ca915faf03a8bb04cb075e3d354b0650, type: 3}
-  m_Name: Item
+  m_Name: Masquerade Masks
   m_EditorClassIdentifier: 
   _Exciting: 0
   _Humor: 0
-  _Different: 0
-  _Regal: 0
-  _Cost: 0
-  _Name: 
-  _Sprite: {fileID: 0}
-  _Description: 
+  _Different: 2
+  _Regal: 2
+  _Cost: 4
+  _Name: Masquerade Masks
+  _Sprite: {fileID: 21300000, guid: 54504cffdd4e2464c93abf17a0d36d42, type: 3}
+  _Description: Mildly offputting, mildly intriguing. Perfect for that kind of party?
   _PricePlayer: 0

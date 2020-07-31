@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ca915faf03a8bb04cb075e3d354b0650, type: 3}
-  m_Name: Item
+  m_Name: Candy
   m_EditorClassIdentifier: 
-  _Exciting: 0
+  _Exciting: 1
   _Humor: 0
   _Different: 0
   _Regal: 0
-  _Cost: 0
-  _Name: 
-  _Sprite: {fileID: 0}
-  _Description: 
+  _Cost: 1
+  _Name: Assorted Candy
+  _Sprite: {fileID: 21300000, guid: 7627ec58f53535f4ea202055b379ee1a, type: 3}
+  _Description: Great for all ages! Antiacids sold seperately.
   _PricePlayer: 0
