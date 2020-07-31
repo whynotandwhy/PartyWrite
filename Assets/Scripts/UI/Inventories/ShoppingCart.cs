@@ -26,4 +26,27 @@ public class ShoppingCart : CoreManger
         UpdateUI();
         base.OnDrop();
     }
+    public override void HandleSlotDrop(PointerEventData eventData, Draggable dropped)
+    {
+        if (SharedDrag.SlotSource.Manager is Store)
+        {
+            AddOnlySlotDrop(eventData, dropped);
+            return;
+        }
+        base.HandleSlotDrop(eventData, dropped);
+    }
+    protected void AddOnlySlotDrop(PointerEventData eventData, Draggable dropped)
+    {
+        int transferSize = 1;
+        int newvalue = dropped.CanAdd(
+            SharedDrag.SlotSource.DragItem,
+            transferSize);
+
+        if (newvalue <= 0)
+            dropped.Add(SharedDrag.SlotSource.DragItem, transferSize);
+        else
+            dropped.Set(SharedDrag.SlotSource.DragItem, transferSize);
+        OnDrop();
+    }
+
 }

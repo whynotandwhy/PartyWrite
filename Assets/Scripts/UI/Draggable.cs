@@ -4,6 +4,18 @@ using UnityEngine.EventSystems;
 
 public class Draggable : CoreUIElement<Draggable>, ISlot<IItem>
 {
+    [SerializeField] protected bool RightClickClears = true;
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        if ((RightClickClears) && (eventData.button == PointerEventData.InputButton.Right))
+        {
+            Set(default, 0);
+            Manager?.OnDrop();
+        }
+    }
+
+
     [SerializeField] protected Item item;
     public IItem DragItem => item;
 
@@ -20,6 +32,7 @@ public class Draggable : CoreUIElement<Draggable>, ISlot<IItem>
     public int MaxCount => maxCount;
 
     protected CoreManger _Manager;
+    public CoreManger Manager => _Manager;
 
     public void Start()
     {
@@ -73,8 +86,8 @@ public class Draggable : CoreUIElement<Draggable>, ISlot<IItem>
         if (item == default)
             return count;
 
-        if ((this.item == default) || (this.item == item))
-            return SubtractRemainder(count) ;
+        if ((this.item == default) || (this.item == item) || (this.count == 0))
+            return SubtractRemainder(count);
 
         return count;
     }
