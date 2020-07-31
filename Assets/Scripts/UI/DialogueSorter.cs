@@ -119,15 +119,15 @@ public class DialogueSorter : MonoBehaviour
 
                 if (currentPlayerDialogue.dialogue.Length <= playerDialogueIndex)
                 {
-                    playerDialogueIndex = 0;
-                    playerDialogueQueued = false;
-                    DisplayDialogue(string.Empty);
-
                     if (GenerateCustomer)
                     {
                         gameManager.GenerateCustomer();
                         GenerateCustomer = false;
                     }
+
+                    playerDialogueIndex = 0;
+                    playerDialogueQueued = false;
+                    DisplayDialogue(string.Empty);
 
                     return;
                 }

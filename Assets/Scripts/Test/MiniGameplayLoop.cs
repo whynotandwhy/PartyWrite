@@ -89,7 +89,6 @@ public class MiniGameplayLoop : MonoBehaviour
 
     protected void CountDownTime()
     {
-        //Need to display this somewhere
         currentCustomerTime = Mathf.Clamp(currentCustomerTime - Time.deltaTime, 0, customerTimerMax);
 
         timerUpdater.UpdateUI(currentCustomerTime / customerTimerMax);

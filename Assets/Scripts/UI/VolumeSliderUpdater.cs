@@ -5,12 +5,10 @@ using UnityEngine.UI;
 public class VolumeSliderUpdater : MonoBehaviour
 {
     [SerializeField] protected Slider bgmVolumeSlider;
-    [SerializeField] protected Slider sfxVolumeSlider;
 
     protected AudioManager audioManager;
 
 
-    public void UpdateSFXVolume() => audioManager.SFXVolume = sfxVolumeSlider.value;
     public void UpdateBGMVolume() => audioManager.BGMVolume = bgmVolumeSlider.value;
 
 
@@ -19,7 +17,6 @@ public class VolumeSliderUpdater : MonoBehaviour
 
     protected void InitSliders()
     {
-        sfxVolumeSlider.value = audioManager.SFXVolume;
         bgmVolumeSlider.value = audioManager.BGMVolume;
     }
 }

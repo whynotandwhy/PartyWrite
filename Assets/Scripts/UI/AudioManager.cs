@@ -7,15 +7,15 @@ public class AudioManager : MonoBehaviour
     [SerializeField] AudioClip titleBGMSong = default;
     [SerializeField] AudioClip shopBGMSong = default;
     protected AudioSource[] audioSources;
-    protected AudioSource sfxAudioSource;
+    //protected AudioSource sfxAudioSource;
     protected AudioSource bgmAudioSource;
     
     public static AudioManager instance;
 
-    public float SFXVolume { get => sfxAudioSource.volume; set => sfxAudioSource.volume = value; }
+    //public float SFXVolume { get => sfxAudioSource.volume; set => sfxAudioSource.volume = value; }
     public float BGMVolume { get => bgmAudioSource.volume; set => bgmAudioSource.volume = value; }
 
-    public void PlaySoundEffect(AudioClip clipToPlay) => sfxAudioSource.PlayOneShot(clipToPlay);
+    //public void PlaySoundEffect(AudioClip clipToPlay) => sfxAudioSource.PlayOneShot(clipToPlay);
 
     public void PlayShopSong()
     {
@@ -42,7 +42,7 @@ public class AudioManager : MonoBehaviour
         #endregion
 
         audioSources = GetComponents<AudioSource>();
-        sfxAudioSource = audioSources[0];
+        //sfxAudioSource = audioSources[0];
         bgmAudioSource = audioSources[1];
     }
 
