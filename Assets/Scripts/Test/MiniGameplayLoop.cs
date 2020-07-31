@@ -11,6 +11,7 @@ public class MiniGameplayLoop : MonoBehaviour
     [SerializeField] protected DialogueSorter dialogueSorter;
     [SerializeField] protected AvatarDisplayController avatarDisplayController;
     [SerializeField] protected WinPanelUpdater winPanel;
+    [SerializeField] protected TimerUpdater timerUpdater;
 
     [Header("Game Settings")] [SerializeField] protected int totalCustomerCount = 2;
     [SerializeField] protected float customerTimerMax;
@@ -31,6 +32,8 @@ public class MiniGameplayLoop : MonoBehaviour
     {
         customerScores = new float[totalCustomerCount + 1];
         currentCustomerIndex = 0;
+        currentCustomerTime = customerTimerMax;
+
 
         winPanel.UpdateUI(customerScores);
 
@@ -62,11 +65,15 @@ public class MiniGameplayLoop : MonoBehaviour
             avatarDisplayController = FindObjectOfType<AvatarDisplayController>();
         if (winPanel == null)
             winPanel = FindObjectOfType<WinPanelUpdater>();
+        if (timerUpdater == null)
+            timerUpdater = FindObjectOfType<TimerUpdater>();
     }
 
     protected void Start()
     {
+        currentCustomerTime = customerTimerMax;
         customerScores = new float[totalCustomerCount + 1];
+
         dialogueSorter.GenerateCustomer = true;
         dialogueSorter.DisplayPlayerIntro();
     }
@@ -83,6 +90,8 @@ public class MiniGameplayLoop : MonoBehaviour
     {
         //Need to display this somewhere
         currentCustomerTime = Mathf.Clamp(currentCustomerTime - Time.deltaTime, 0, customerTimerMax);
+
+        timerUpdater.UpdateUI(currentCustomerTime / customerTimerMax);
 
         if (currentCustomerTime <= 0f)
         {
