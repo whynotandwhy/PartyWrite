@@ -659,8 +659,8 @@ MonoBehaviour:
   itemDisplay: {fileID: 180855036}
   dialogueSorter: {fileID: 1329734405}
   avatarDisplayController: {fileID: 18240180}
-  winPanel: {fileID: 0}
-  timerUpdater: {fileID: 0}
+  winPanel: {fileID: 1779075603}
+  timerUpdater: {fileID: 595208403}
   totalCustomerCount: 5
   customerTimerMax: 60
 --- !u!4 &180855035
@@ -10367,7 +10367,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1972028267}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 180855034}
+        m_MethodName: EndTurn
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1972028267
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -54,6 +54,8 @@ public class MiniGameplayLoop : MonoBehaviour
         countDownPaused = false;
     }
 
+    public void EndTurn() => currentCustomerTime = 0f;
+
     protected void Awake()
     {
         if (customerRatingDisplay == null)
